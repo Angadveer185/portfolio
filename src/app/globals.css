@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds */
+  --bg-primary: #131313;
+  --bg-secondary: #E9D3BB;
+  --bg-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 150 150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.60' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='0.70'/%3E%3C/svg%3E");
+
+  /* Text */
+  --text-primary: #E25543;
+  --text-secondary: #D4BAA3;
+  --text-tertiary: #1E1E1E;
+  --text-quaternary: #2C2C2C;
+
+  /* Icons */
+  --icons-primary: #E25543;
+  --icons-secondary: #D4BAA3;
+  --icons-tertiary: #1E1E1E;
+  --icons-quaternary: #2C2C2C;
+
+
+  /* Accents */
+  --accent-light: #F5E1CD;
+  --accent-off: #E9D3BB;
+  --accent-grey: #646464;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-quaternary: var(--text-quaternary);
+
+  --color-icons-primary: var(--icons-primary);
+  --color-icons-secondary: var(--icons-secondary);
+  --color-icons-tertiary: var(--icons-tertiary);
+  --color-icons-quaternary: var(--icons-quaternary);
+
+  --color-accent-light: var(--accent-light);
+  --color-accent-off: var(--accent-off);
+  --color-accent-grey: var(--accent-grey);
+
+  --font-gochi: var(--font-gochi);
+  --font-splash: var(--font-splash);
+  --font-bree: var(--font-bree);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary);
+  background-image: var(--bg-grain);
+  background-blend-mode: soft-light;
+  background-repeat: repeat;
+  background-size: 150px 150px;
+  color: white;
 }
