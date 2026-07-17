@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,14 +13,40 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Ensure slight scrolling buffer to avoid hyper-sensitivity trigger glitches
+      if (Math.abs(currentScrollY - lastScrollY.current) < 5) return;
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+        // Scrolling Down - Hide Navbar
+        setIsVisible(false);
+      } else {
+        // Scrolling Up - Reveal Navbar
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="fixed top-0 left-0 z-50 w-full">
-
+    <header 
+      className={`fixed top-0 left-0 z-50 w-full transition-transform duration-300 ease-in-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       <div className="flex justify-center">
-
-        <div className="relative w-[70%] max-w-screen-2xl">
-
-          {/* Paper */}
+        <div className="relative w-[60%] max-w-screen-2xl">
+          {/* Paper Background */}
           <Image
             src="/images/Paper.svg"
             alt="Sketchbook Navbar"
@@ -32,7 +59,6 @@ export default function Navbar() {
 
           {/* Content */}
           <div className="absolute inset-0 flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-16">
-
             {/* Logo */}
             <Link href="/" className="shrink-0">
               <Image
@@ -44,8 +70,8 @@ export default function Navbar() {
               />
             </Link>
 
-            {/* Navigation */}
-            <nav className="flex min-w-0 items-center justify-end gap-3 overflow-x-auto sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 sm:mb-1 md:mb-2 lg:mb-4 xl:mb-6">
+            {/* Navigation (Strictly hiding scrollbars everywhere) */}
+            <nav className="flex min-w-0 items-center justify-end gap-3 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 sm:mb-1 md:mb-2 lg:mb-4 xl:mb-6 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
@@ -56,11 +82,8 @@ export default function Navbar() {
                 </Link>
               ))}
             </nav>
-
           </div>
-
         </div>
-
       </div>
     </header>
   );

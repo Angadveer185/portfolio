@@ -10,7 +10,7 @@ const Doodle = ({
   y,
   rotation = 0,
   opacity = 1,
-  zIndex = 0,
+  zIndex = -1,
   className,
   alt = "Doodle",
 }: DoodleProps) => {

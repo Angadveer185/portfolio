@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { gochi, splash, bree } from "@/lib/fonts";
 import "./globals.css";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+import ClickSpark from "@/components/ui/ClickSpark";
+import { COLORS } from "@/lib/colors";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Portfolio | Angadveer Singh",
@@ -15,9 +21,21 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`h-full antialiased`}
+      className={cn("h-full", "antialiased", "font-sans", geist.variable)}
     >
-      <body className={`min-h-full flex flex-col ${gochi.variable} ${splash.variable} ${bree.variable}`}>{children}</body>
+      <body
+        className={`flex min-h-full flex-col ${gochi.variable} ${splash.variable} ${bree.variable}`}
+      >
+        <ClickSpark
+          sparkColor={COLORS.primary}
+          sparkSize={12}
+          sparkRadius={15}
+          sparkCount={8}
+          duration={400}
+        >
+          {children}
+        </ClickSpark>
+      </body>
     </html>
   );
 }

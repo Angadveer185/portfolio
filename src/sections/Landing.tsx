@@ -4,12 +4,15 @@ import { Button } from "sketchbook-ui";
 import 'sketchbook-ui/style.css';
 import { COLORS } from "@/lib/colors";
 import Tag from "@/components/ui/Tag";
+import Sketchbook from "@/components/Sketchbook/Sketchbook";
+import { Canvas } from "@react-three/fiber";
+import Scene from "@/components/3-D/Scene";
 
 export default function Landing() {
   return (
     <section className="flex min-h-screen w-full">
       {/* LEFT */}
-      <div className="flex w-full items-center justify-center px-8 py-20 lg:w-[55%] lg:px-20">
+      <div className="flex w-full items-center justify-center px-8 py-20 lg:w-[50%] lg:px-20">
         <div className="w-full max-w-2xl">
           {/* Greeting */}
           <p className="text-text-secondary font-bree text-4xl md:text-5xl">
@@ -74,8 +77,8 @@ export default function Landing() {
 
       {/* RIGHT (Sketchbook Placeholder) */}
 
-      <div className="hidden w-[45%] items-center justify-center lg:flex">
-        <div className="h-[92vh] w-[90%] rounded-xl bg-red-500" />
+      <div className="hidden w-[50%] items-center justify-center lg:flex overflow-clip">
+        <Scene />
       </div>
     </section>
   );
