@@ -1,4 +1,5 @@
 import { SkillEntry } from "@/types/types";
+import { Project } from "@/types/types";
 
 export const SKILL_DATA: SkillEntry[] = [
   {
@@ -73,4 +74,77 @@ export const SKILL_DATA: SkillEntry[] = [
       caption: "Database Management",
     },
   },
+];
+
+
+// ----
+
+export const projects: Project[] = [
+    {
+        id: 1,
+        title: "Analytics Dashboard",
+        description: "A secure, enterprise-grade business intelligence dashboard featuring interactive multi-tenant metric tracking, user access controls, and live stream ingestion panels.",
+        image: "/projects/placeholder.png",
+        technologies: ["React", "Next.js", "Node.js", "MongoDB", "Tailwind CSS"],
+        github: "#",
+        demo: "#",
+        achievements: [
+            "Architected web socket tunnels to pipe high-throughput telemetry updates down to Client DOM trees under 45ms.",
+            "Configured custom JWT cookie rotation cycles alongside strict multi-tenant role isolation schemas.",
+            "Architected web socket tunnels to pipe high-throughput telemetry updates down to Client DOM trees under 45ms.",
+            "Configured custom JWT cookie rotation cycles alongside strict multi-tenant role isolation schemas."
+        ]
+    },
+    {
+        id: 2,
+        title: "2D Retro Platformer",
+        description: "A fast-paced side-scroller action engine written with stateful physics maps, precise input buffering, procedural enemy asset pathing, and intricate multi-tier boss mechanics.",
+        image: "/projects/placeholder.png",
+        technologies: ["Unity", "C#", "Aseprite", "WebGL"],
+        github: "#",
+        demo: "#",
+        achievements: [
+            "Programmed frame-exact coyote time, custom hit-box alignment layers, and recursive wall jumping vectors.",
+            "Optimized sprite sheet texture maps via low-draw state compression pipelines ensuring smooth 60fps WebGL execution."
+        ]
+    },
+    {
+        id: 3,
+        title: "Network Topology Simulator",
+        description: "An algorithmic visualizer displaying graph data configurations, simulating load balancers, and mimicking real-time data corruption drops across network layouts.",
+        image: "/projects/placeholder.png",
+        technologies: ["Python", "NetworkX", "FastAPI", "D3.js"],
+        github: "#",
+        demo: "#",
+        achievements: [
+            "Rendered Dijkstra and A* path discovery sequences interactively through high-performance D3 link graphs.",
+            "Simulated network throttle behaviors via automated packet congestion calculation cycles."
+        ]
+    },
+    {
+        id: 4,
+        title: "Collaborative Design Canvas",
+        description: "A multiplayer vector layout platform allowing remote development squads to map vector shapes, wireframes, and layouts onto a infinite vector room concurrently.",
+        image: "/projects/placeholder.png",
+        technologies: ["TypeScript", "Next.js", "Socket.io", "Redis", "HTML5 Canvas"],
+        github: "#",
+        demo: "#",
+        achievements: [
+            "Implemented an Conflict-Free Replicated Data Type (CRDT) operational sequence matrix avoiding document drift bugs.",
+            "Integrated a highly responsive Redis pub/sub layer handling cursor positional events with sub-10ms server overhead."
+        ]
+    },
+    {
+        id: 5,
+        title: "Neural Audio Classifier",
+        description: "A deep-learning signal workflow platform reading audio recordings to extract wave frequencies and visually identify instrument frequencies.",
+        image: "/projects/placeholder.png",
+        technologies: ["Python", "PyTorch", "NumPy", "Docker", "React"],
+        github: "#",
+        demo: "#",
+        achievements: [
+            "Trained a convolutional neural network (CNN) variant achieving a verified 94.2% taxonomy parsing accuracy target.",
+            "Wrapped the inference pipeline inside containerized workers utilizing asynchronous message queues."
+        ]
+    }
 ];

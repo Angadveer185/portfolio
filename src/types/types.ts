@@ -30,3 +30,14 @@ export interface SkillEntry {
     caption: string;
   };
 }
+
+export interface Project {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    technologies: string[];
+    github: string;
+    demo: string;
+    achievements: string[]; // 1. Added achievements property
+}
