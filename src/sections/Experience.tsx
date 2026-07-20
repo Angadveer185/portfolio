@@ -15,9 +15,9 @@ function Experience() {
   };
 
   return (
-    <div className="bg-bg-tertiary flex min-h-screen flex-col overflow-x-hidden">
+    <div className="bg-bg-tertiary flex min-h-screen flex-col overflow-x-hidden mt-20 pt-20">
       {/* Header Container */}
-      <div className="flex w-full items-center justify-center px-6 py-14 md:py-20 lg:px-14">
+      <div className="flex w-full items-center justify-center px-6 pb-14 md:pb-20 lg:px-14">
         <h1 className="text-text-tertiary font-splash text-center text-4xl tracking-tight sm:text-5xl md:text-7xl lg:text-8xl">
           Experience - Journey
         </h1>

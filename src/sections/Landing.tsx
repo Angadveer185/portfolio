@@ -28,7 +28,7 @@ export default function Landing() {
           <div className="mt-10 flex flex-wrap gap-3">
             {["Dev-Ops", "Java Programmer", "Full-Stack", "Game Developer"].map(
               (tag) => (
-                <Tag text={tag} />
+                <Tag key={tag} text={tag} />
               ),
             )}
           </div>

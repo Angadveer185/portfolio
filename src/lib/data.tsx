@@ -245,3 +245,12 @@ export const experiences: Experience[] = [
     ],
   },
 ];
+
+export const Socials = {
+  LinkedIn: "https://www.linkedin.com",
+  GitHub: "https://www.github.com",
+  Instagram: "https://www.instagram.com",
+  Discord: "https://www.discord.com",
+  Mail: "mailto:example@example.com",
+  Phone: "tel:+1234567890"
+};

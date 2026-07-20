@@ -5,7 +5,7 @@ export default function Resume() {
   return (
     <div className="flex min-h-screen flex-col overflow-hidden">
       {/* Header Section */}
-      <div className="flex w-full items-center justify-center px-8 py-12 lg:px-20">
+      <div className="flex w-full items-center justify-center px-8 pb-12 lg:px-20">
         <div className="text-text-primary font-splash text-center text-5xl md:text-8xl">
           Resume - Dossier
         </div>

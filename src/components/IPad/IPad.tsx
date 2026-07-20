@@ -8,10 +8,10 @@ function IPad() {
   const [isOn, setIsOn] = useState(true);
 
   return (
-    <div className="relative mx-auto flex w-full max-w-sm flex-col items-center gap-4 rounded-[2.5rem] border-4 border-[#AAABAC] bg-black p-4 select-none transition-all duration-300 sm:max-w-xl md:max-w-4xl md:flex-row md:p-6 md:pr-3">
+    <div className="relative mx-auto flex w-full max-w-sm flex-col items-center gap-4 rounded-[2.5rem] border-4 border-[#AAABAC] bg-black p-4 select-none transition-all duration-300 sm:max-w-xl md:max-w-4xl md:flex-row md:p-3 md:pr-2">
       
       {/* Outer Screen Bounding Container */}
-      <div className="relative flex min-h-[500px] w-full items-center justify-center overflow-hidden rounded-[1.8rem] bg-[#F5F5F5] text-[#222222] font-sans p-4 md:h-full md:p-[3%]">
+      <div className="relative flex min-h-[500px] w-full items-center justify-center overflow-hidden rounded-[1.8rem] bg-[#F5F5F5] border-none text-[#222222] font-sans p-4 md:h-full md:p-[3%]">
         
         {/* Animated Black Screen Overlay for Power On/Off */}
         <div 
