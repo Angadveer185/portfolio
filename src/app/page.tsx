@@ -3,8 +3,10 @@
 import ProjectShowcase from "@/components/TV/ProjectShowcase";
 import Doodle from "@/components/ui/Doodle";
 import Navbar from "@/components/ui/NavBar";
+import Experience from "@/sections/Experience";
 import Landing from "@/sections/Landing";
 import Projects from "@/sections/Projects";
+import Resume from "@/sections/Resume";
 import Skills from "@/sections/Skills";
 
 export default function Home() {
@@ -16,8 +18,8 @@ export default function Home() {
       <Doodle src="/doodles/Star.png" width={1} x={5} y={12} rotation={-15} />
       <Skills />
       <Projects />
-      <div>yo</div>
-      {/* <ProjectShowcase /> */}
+      <Experience />
+      <Resume />
     </main>
   );
 }

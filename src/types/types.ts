@@ -41,3 +41,23 @@ export interface Project {
     demo: string;
     achievements: string[]; // 1. Added achievements property
 }
+
+export interface Technology {
+  name: string;
+  icon?: string;
+}
+
+export interface Experience {
+  company: string;
+  role: string;
+
+  logo: string;
+
+  from: string;
+  to: string;
+  location: string;
+
+  description: string[];
+
+  technologies: Technology[];
+}
