@@ -17,7 +17,7 @@ export default function ProjectShowcase() {
       <div className="relative flex w-full max-w-7xl flex-col rounded-[28px] border border-[#5b4d42] bg-[#2B2825] sm:rounded-[34px]">
         <div />
 
-        <div className="w-full flex-1 p-2 sm:p-4">
+        <div className="w-full flex-1 p-2 sm:p-4 h-[80vh]">
           <CRTScreen
             project={player.project}
             direction={player.direction}
@@ -46,7 +46,7 @@ export default function ProjectShowcase() {
               />
             </div>
 
-            <div className="flex w-full justify-center lg:w-auto">
+            <div className="hidden lg:flex w-full justify-center lg:w-auto">
               <VolumeKnob volume={player.volume} setVolume={player.setVolume} />
             </div>
           </div>

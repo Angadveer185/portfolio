@@ -12,7 +12,7 @@ export default function CassetteTape({ title, active, onClick }: Props) {
   return (
     <button
       onClick={onClick}
-      className={`group relative flex w-full max-w-md cursor-pointer flex-col justify-between rounded-xl border-2 p-3 transition-all duration-200 outline-none select-none hover:scale-[1.02] active:translate-y-[2px] active:scale-[0.98] ${
+      className={` group relative flex w-full max-w-md cursor-pointer flex-col justify-between rounded-xl border-2 p-3 transition-all duration-200 outline-none select-none hover:scale-[1.02] active:translate-y-[2px] active:scale-[0.98] ${
         active
           ? "border-text-primary bg-[#2d1f1a] shadow-[0_8px_24px_rgba(226,85,67,0.15)]"
           : "border-[#4a3d35] bg-[#1e1b19] shadow-md hover:border-[#69584a]"

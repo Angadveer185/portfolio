@@ -65,7 +65,7 @@ export default function ProjectCard({ project }: Props) {
         </div>
       </div>
 
-      <div className="flex w-full flex-col gap-3 self-end border-t border-[#54463a]/30 pt-4 lg:pt-6">
+      <div className="hidden lg:flex w-full flex-col gap-3 self-end border-t border-[#54463a]/30 pt-4 lg:pt-6">
         <h4 className="font-bree text-xs tracking-widest text-[#E9D3BB]/70 uppercase">
           Key Achievements
         </h4>

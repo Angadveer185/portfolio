@@ -61,3 +61,20 @@ export interface Experience {
 
   technologies: Technology[];
 }
+
+export interface Ability {
+  title: string;
+  subtitle: string;
+  level: number;
+}
+
+export interface Stats {
+  projects: number;
+  githubPushes: number;
+}
+
+export interface AboutData {
+  goal: string;
+  abilities: Ability[];
+  stats: Stats;
+}

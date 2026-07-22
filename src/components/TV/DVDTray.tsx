@@ -24,9 +24,9 @@ export default function DVDTray({ open, current, select }: DVDTrayProps) {
 
   return (
     <div
-      className={`bg-bg-primary -z-1 absolute left-1/2 w-[90vw] max-w-md rounded-2xl border border-[#5b4d42] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.8)] transition-all duration-700 ease-in-out ${
+      className={`bg-bg-primary -z-1 absolute left-1/2 w-[90vw] max-w-md rounded-2xl border border-[#5b4d42] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.8)] transition-all duration-400 ease-in-out ${
         open
-          ? "pointer-events-auto bottom-[-250px] -translate-x-1/2 scale-100 opacity-100"
+          ? "pointer-events-auto bottom-[-250px] z-1 -translate-x-1/2 scale-100 opacity-100"
           : "pointer-events-none bottom-[0px] -translate-x-1/2 scale-95 opacity-0 blur-sm"
       } `}
     >

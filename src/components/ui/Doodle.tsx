@@ -5,7 +5,7 @@ import { DoodleProps } from "@/types/types";
 
 const Doodle = ({
   src,
-  width,
+  width, // e.g. 200 (pixels on desktop)
   x,
   y,
   rotation = 0,
@@ -17,13 +17,17 @@ const Doodle = ({
   return (
     <div
       className={clsx(
-        "pointer-events-none absolute select-none",
+        "pointer-events-none absolute select-none origin-center",
         className
       )}
       style={{
         left: `${x}%`,
         top: `${y}%`,
-        width: `clamp(40px, ${width}vw, 400px)`,
+        /* 
+          Scales down flexibly on small viewports (down to 30% of target or 35px), 
+          and caps out naturally at full target pixel size on desktop.
+        */
+        width: `clamp(${Math.max(35, Math.round(width * 0.35))}px, ${width * 0.2}vw, ${width}px)`,
         transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
         opacity,
         zIndex,
@@ -34,7 +38,7 @@ const Doodle = ({
         alt={alt}
         width={1000}
         height={1000}
-        className="h-auto w-full"
+        className="h-auto w-full object-contain"
         draggable={false}
         priority={false}
       />

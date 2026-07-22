@@ -1,26 +1,28 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import SpinningCottage from "@/components/Models/SpinningCottage";
+import { OrbitControls } from "@react-three/drei";
+import Ash from "@/components/Models/Ash";
 
 export default function Scene() {
   return (
     <Canvas
       camera={{
-        position: [10, 2, 6],
+        position: [0, -4, 6],
         fov: 45,
       }}
     >
       <ambientLight intensity={2} />
+      <directionalLight position={[5, 5, 5]} intensity={2} />
 
-      <directionalLight
-        position={[5, 10, -4]}
-        intensity={2}
-      />
+      <Ash scale={2.2} position={[0.4, -2.5, 0]} />
 
-      <SpinningCottage
-        scale={2}
-        speed={0.1}
+      {/* Lock vertical rotation to force Y-axis only rotation */}
+      <OrbitControls
+        minPolarAngle={Math.PI / 2}
+        maxPolarAngle={Math.PI / 2}
+        enableZoom={false}
+        enablePan={false} // Optional: prevents panning off-center
       />
     </Canvas>
   );

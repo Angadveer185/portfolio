@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FaGithub, FaLinkedin, FaInstagram, FaDiscord } from "react-icons/fa6";
 import { Socials } from "@/lib/data";
+import { toast } from "sonner";
 import {
   Mail,
   ArrowLeft,
@@ -9,6 +10,8 @@ import {
   Search,
   Plus,
   SlidersHorizontal,
+  Loader2,
+  GripHorizontal,
 } from "lucide-react";
 
 interface MacbookProps {
@@ -50,19 +53,82 @@ export default function Macbook({ children }: MacbookProps) {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
 
-  const handleReset = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Dragging state for the Browser Mockup
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragRef = useRef<{ startX: number; startY: number }>({ startX: 0, startY: 0 });
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    dragRef.current = {
+      startX: e.clientX - position.x,
+      startY: e.clientY - position.y,
+    };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    setPosition({
+      x: e.clientX - dragRef.current.startX,
+      y: e.clientY - dragRef.current.startY,
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleReset = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setEmail("");
     setSubject("");
     setMessage("");
+    toast.info("Form reset.");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(
-      `Sending Message!\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`,
-    );
+    if (isSending) return;
+
+    setIsSending(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          subject,
+          message,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to send");
+      }
+
+      toast.success("Email sent successfully!");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+  // Keyboard navigation logic
+  const handleKeyDown = (e: React.KeyboardEvent, fieldType: "input" | "textarea") => {
+    if (e.key === "Enter" && !e.shiftKey && fieldType === "input") {
+      e.preventDefault();
+      handleSubmit(e);
+    }
   };
 
   return (
@@ -86,14 +152,18 @@ export default function Macbook({ children }: MacbookProps) {
             {children ? (
               children
             ) : (
-              <div className="relative flex h-full w-full flex-col gap-2 overflow-hidden bg-[#020205] p-2 font-sans text-white sm:p-4 md:grid md:grid-cols-12 md:gap-4">
+              <div 
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                className="relative flex h-full w-full flex-col gap-2 overflow-hidden bg-[#020205] p-2 font-sans text-white sm:p-4 md:grid md:grid-cols-12 md:gap-4"
+              >
                 {/* Dynamic Wallpaper Glows */}
                 <div className="absolute top-[-20%] left-[-10%] h-[70%] w-[90%] rotate-12 rounded-full bg-gradient-to-r from-purple-900/40 via-violet-800/20 to-transparent blur-[40px] sm:blur-[80px]" />
                 <div className="absolute right-[-15%] bottom-[-10%] h-[80%] w-[80%] rounded-full bg-gradient-to-l from-indigo-900/30 via-purple-900/10 to-transparent blur-[40px] sm:blur-[90px]" />
                 <div className="absolute bottom-[10%] left-[20%] h-[40%] w-[60%] -rotate-12 rounded-full bg-blue-950/40 blur-[40px] sm:blur-[70px]" />
 
                 {/* SIDE/TOP DOCK: App Shortcuts on Desktop */}
-                <div className="z-10 flex shrink-0 flex-row justify-center gap-4 border-b border-white/5 pt-1 pb-2 md:col-span-3 md:flex-col md:justify-start md:items-start md:gap-5 md:border-b-0 md:pt-4 md:pb-0">
+                <div className="z-10 flex shrink-0 flex-row justify-center gap-4 border-b border-white/5 pt-1 pb-2 md:col-span-3 md:flex-col md:items-start md:justify-start md:gap-5 md:border-b-0 md:pt-4 md:pb-0">
                   <AppIcon
                     label="GitHub"
                     bgColor="bg-[#24292F]"
@@ -127,10 +197,16 @@ export default function Macbook({ children }: MacbookProps) {
                   </AppIcon>
                 </div>
 
-                {/* BROWSER MOCKUP WINDOW */}
-                <div className="z-10 flex flex-1 flex-col overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/90 text-neutral-200 shadow-2xl backdrop-blur-md md:col-span-9 md:my-auto md:h-[96%]">
-                  {/* Browser Window Header */}
-                  <div className="flex items-center justify-between border-b border-neutral-800 bg-neutral-950 px-2 py-1.5 sm:px-4 sm:py-2.5">
+                {/* BROWSER MOCKUP WINDOW (DRAGGABLE) */}
+                <div 
+                  style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+                  className="z-10 flex flex-1 flex-col overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/90 text-neutral-200 shadow-2xl backdrop-blur-md md:col-span-9 md:my-auto md:h-[96%] transition-transform duration-75 ease-out"
+                >
+                  {/* Browser Window Header (Draggable Handle) */}
+                  <div 
+                    onMouseDown={handleMouseDown}
+                    className="flex cursor-grab items-center justify-between border-b border-neutral-800 bg-neutral-950 px-2 py-1.5 active:cursor-grabbing sm:px-4 sm:py-2.5"
+                  >
                     {/* Window Controls (Mac Traffic Lights) */}
                     <div className="flex items-center gap-1 sm:gap-1.5">
                       <div className="h-2 w-2 rounded-full bg-[#FF5F56] sm:h-3 sm:w-3" />
@@ -146,11 +222,7 @@ export default function Macbook({ children }: MacbookProps) {
                         <RotateCcw
                           size={14}
                           className="cursor-pointer hover:text-white"
-                          onClick={() => {
-                            setEmail("");
-                            setSubject("");
-                            setMessage("");
-                          }}
+                          onClick={handleReset}
                         />
                       </div>
                       <div className="flex flex-1 items-center gap-1.5 rounded-lg border border-neutral-700/50 bg-neutral-800 px-2 py-0.5 text-[9px] text-neutral-400 sm:px-2.5 sm:text-[11px]">
@@ -161,8 +233,9 @@ export default function Macbook({ children }: MacbookProps) {
                       </div>
                     </div>
 
-                    {/* Secondary Utilities */}
+                    {/* Drag Grip Indicator & Secondary Utilities */}
                     <div className="flex items-center gap-1.5 text-neutral-400 sm:gap-2">
+                      <GripHorizontal size={14} className="text-neutral-600" />
                       <Plus size={13} />
                       <SlidersHorizontal size={11} />
                     </div>
@@ -192,10 +265,13 @@ export default function Macbook({ children }: MacbookProps) {
                           <input
                             type="email"
                             required
+                            tabIndex={1}
+                            disabled={isSending}
                             placeholder="you@example.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="focus:border-bg-tertiary w-full rounded-md border border-neutral-700 bg-neutral-950 p-1.5 text-[11px] text-white placeholder-neutral-600 shadow-inner transition-colors outline-none sm:p-2 sm:text-xs"
+                            onKeyDown={(e) => handleKeyDown(e, "input")}
+                            className="focus:border-bg-tertiary w-full rounded-md border border-neutral-700 bg-neutral-950 p-1.5 text-[11px] text-white placeholder-neutral-600 shadow-inner transition-colors outline-none disabled:opacity-50 sm:p-2 sm:text-xs"
                           />
                         </div>
 
@@ -207,10 +283,13 @@ export default function Macbook({ children }: MacbookProps) {
                           <input
                             type="text"
                             required
+                            tabIndex={2}
+                            disabled={isSending}
                             placeholder="What project are we collaborating on?"
                             value={subject}
                             onChange={(e) => setSubject(e.target.value)}
-                            className="focus:border-bg-tertiary w-full rounded-md border border-neutral-700 bg-neutral-950 p-1.5 text-[11px] text-white placeholder-neutral-600 shadow-inner transition-colors outline-none sm:p-2 sm:text-xs"
+                            onKeyDown={(e) => handleKeyDown(e, "input")}
+                            className="focus:border-bg-tertiary w-full rounded-md border border-neutral-700 bg-neutral-950 p-1.5 text-[11px] text-white placeholder-neutral-600 shadow-inner transition-colors outline-none disabled:opacity-50 sm:p-2 sm:text-xs"
                           />
                         </div>
 
@@ -222,10 +301,13 @@ export default function Macbook({ children }: MacbookProps) {
                           <textarea
                             rows={2}
                             required
+                            tabIndex={3}
+                            disabled={isSending}
                             placeholder="Write your note details here..."
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            className="focus:border-bg-tertiary sm:rows-3 w-full resize-none rounded-md border border-neutral-700 bg-neutral-950 p-1.5 text-[11px] text-white placeholder-neutral-600 shadow-inner transition-colors outline-none sm:p-2 sm:text-xs"
+                            onKeyDown={(e) => handleKeyDown(e, "textarea")}
+                            className="focus:border-bg-tertiary sm:rows-3 w-full resize-none rounded-md border border-neutral-700 bg-neutral-950 p-1.5 text-[11px] text-white placeholder-neutral-600 shadow-inner transition-colors outline-none disabled:opacity-50 sm:p-2 sm:text-xs"
                           />
                         </div>
 
@@ -233,16 +315,21 @@ export default function Macbook({ children }: MacbookProps) {
                         <div className="flex justify-end gap-2 pt-1 select-none sm:pt-2">
                           <button
                             type="button"
+                            tabIndex={5}
+                            disabled={isSending}
                             onClick={handleReset}
-                            className="cursor-pointer rounded-md border border-neutral-700 bg-neutral-800 px-2.5 py-1 text-[10px] font-semibold text-neutral-300 transition-all hover:bg-neutral-700 hover:text-white active:scale-95 sm:px-3 sm:py-1.5 sm:text-[11px]"
+                            className="cursor-pointer rounded-md border border-neutral-700 bg-neutral-800 px-2.5 py-1 text-[10px] font-semibold text-neutral-300 transition-all hover:bg-neutral-700 hover:text-white active:scale-95 disabled:opacity-50 sm:px-3 sm:py-1.5 sm:text-[11px]"
                           >
                             Reset
                           </button>
                           <button
                             type="submit"
-                            className="bg-bg-tertiary hover:bg-bg-tertiary/90 cursor-pointer rounded-md px-3 py-1 text-[10px] font-bold text-white shadow-md transition-all active:scale-95 sm:px-4 sm:py-1.5 sm:text-[11px]"
+                            tabIndex={4}
+                            disabled={isSending}
+                            className="bg-bg-tertiary hover:bg-bg-tertiary/90 flex items-center gap-1.5 cursor-pointer rounded-md px-3 py-1 text-[10px] font-bold text-white shadow-md transition-all active:scale-95 disabled:opacity-50 sm:px-4 sm:py-1.5 sm:text-[11px]"
                           >
-                            Send Message
+                            {isSending && <Loader2 size={12} className="animate-spin" />}
+                            {isSending ? "Sending..." : "Send Message"}
                           </button>
                         </div>
                       </form>

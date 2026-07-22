@@ -39,14 +39,16 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 z-50 w-full transition-transform duration-300 ease-in-out ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <div className="flex justify-center">
-        <div className="relative w-[60%] max-w-screen-2xl">
-          {/* Paper Background */}
+      <div className="flex justify-center px-1 sm:px-2">
+        {/* Dynamic responsive container width: wider on small screens to fit all scaled links smoothly */}
+        <div className="relative w-[96%] xs:w-[92%] sm:w-[85%] md:w-[70%] lg:w-[60%] max-w-screen-2xl">
+          
+          {/* Paper Background SVG */}
           <Image
             src="/images/Paper.svg"
             alt="Sketchbook Navbar"
@@ -54,29 +56,29 @@ export default function Navbar() {
             draggable={false}
             width={1600}
             height={220}
-            className="h-auto w-full select-none pointer-events-none"
+            className="h-auto w-full select-none pointer-events-none min-h-[46px] object-cover sm:object-contain"
           />
 
-          {/* Content */}
-          <div className="absolute inset-0 flex items-center justify-between px-4 sm:px-6 md:px-10 lg:px-16">
+          {/* Header Content Overlay */}
+          <div className="absolute inset-0 flex items-center justify-between px-2.5 xs:px-4 sm:px-6 md:px-10 lg:px-16 pb-0.5 sm:pb-1">
             {/* Logo */}
-            <Link href="/" className="shrink-0">
+            <Link href="/" className="shrink-0 pr-1 sm:pr-0">
               <Image
                 src="/images/Logo.svg"
                 alt="Logo"
                 width={54}
                 height={54}
-                className="h-auto w-7 sm:w-8 md:w-10 lg:w-12 transition duration-300 hover:rotate-6 hover:scale-105"
+                className="h-auto w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 transition duration-300 hover:rotate-6 hover:scale-105"
               />
             </Link>
 
-            {/* Navigation (Strictly hiding scrollbars everywhere) */}
-            <nav className="flex min-w-0 items-center justify-end gap-3 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 sm:mb-1 md:mb-2 lg:mb-4 xl:mb-6 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            {/* Scaled Inline Navigation (Zero scrollbars, smooth inline fit) */}
+            <nav className="flex min-w-0 items-center justify-end gap-1.5 xs:gap-2.5 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="whitespace-nowrap text-xs text-text-tertiary tracking-wide transition duration-200 hover:-translate-y-0.5 hover:text-text-primary sm:text-sm md:text-base lg:text-lg"
+                  className="whitespace-nowrap text-[10px] xs:text-[11px] sm:text-xs md:text-base lg:text-lg text-text-tertiary tracking-tight xs:tracking-normal sm:tracking-wide transition duration-200 hover:-translate-y-0.5 hover:text-text-primary"
                 >
                   {item.name}
                 </Link>

@@ -2,6 +2,7 @@ import {
   Gochi_Hand,
   Splash,
   Bree_Serif,
+  Meddon
 } from "next/font/google";
 
 export const gochi = Gochi_Hand({
@@ -21,3 +22,9 @@ export const bree = Bree_Serif({
   weight: "400",
   variable: "--font-bree",
 });
+
+export const meddon = Meddon({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-meddon",
+})

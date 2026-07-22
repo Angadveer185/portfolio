@@ -1,11 +1,21 @@
-import Ticket from "@/components/Ticket/Ticket";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, lazy, Suspense } from "react";
 import { experiences } from "@/lib/data";
+import SectionHeader from "@/components/ui/SectionHeading";
+
+// Lazy load the Ticket component
+const Ticket = lazy(() => import("@/components/Ticket/Ticket"));
+
+function TicketSkeleton() {
+  return (
+    <div className="bg-bg-primary/50 w-full animate-pulse rounded-[1.75rem] p-6 md:aspect-[2.05/1] md:rounded-[2.25rem]">
+      <div className="h-full w-full rounded-xl bg-white/5" />
+    </div>
+  );
+}
 
 function Experience() {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Pre-generate stable random rotations (-3deg to +3deg) so cards don't jitter during state cycles
   const randomRotations = useMemo(() => {
     return experiences.map(() => Math.floor(Math.random() * 6) - 3);
   }, []);
@@ -15,56 +25,59 @@ function Experience() {
   };
 
   return (
-    <div className="bg-bg-tertiary flex min-h-screen flex-col overflow-x-hidden mt-20 pt-20">
+    <section className="bg-bg-tertiary relative flex min-h-screen w-full flex-col justify-start px-4 py-12 sm:px-8 md:py-20 lg:py-24 -z-10">
       {/* Header Container */}
-      <div className="flex w-full items-center justify-center px-6 pb-14 md:pb-20 lg:px-14">
-        <h1 className="text-text-tertiary font-splash text-center text-4xl tracking-tight sm:text-5xl md:text-7xl lg:text-8xl">
-          Experience - Journey
-        </h1>
+      <div className="mx-auto w-full max-w-5xl pb-10 sm:pb-14">
+        <SectionHeader id="experience" title="Experience" subtitle="My Journey" inverted />
       </div>
 
-      {/* 
-        ================= RESPONSIVE DECK STACK CONTAINER =================
-        We assign a fluid responsive min-height so that when children use absolute positioning,
-        the wrapper element keeps its form and doesn't collapse layout flow.
-      */}
-      <div className="relative mx-auto flex min-h-[680px] w-full max-w-5xl items-center justify-center px-4 pt-6 pb-32 sm:min-h-[750px] sm:px-6 md:min-h-[480px] md:px-8 lg:min-h-[520px]">
-        {experiences.map((exp, index) => {
-          const isCurrent = index === activeIndex;
+      {/* Dynamic Stack Container: Normal block flow on Mobile, Absolute Stack on Desktop */}
+      <div className="relative mx-auto flex w-full max-w-md items-center justify-center sm:max-w-xl md:max-w-4xl md:min-h-[500px] lg:max-w-5xl lg:min-h-[540px]">
+        <Suspense fallback={<TicketSkeleton />}>
+          {experiences.map((exp, index) => {
+            const isCurrent = index === activeIndex;
 
-          // Calculate visual stack order relative to the active card showing on top
-          const offsetIndex =
-            (index - activeIndex + experiences.length) % experiences.length;
+            const offsetIndex =
+              (index - activeIndex + experiences.length) % experiences.length;
 
-          // Visual calculations for stacked layers
-          const zIndex = experiences.length - offsetIndex;
-          const scale = 1 - offsetIndex * 0.025;
-          const opacity = offsetIndex > 2 ? 0 : 1 - offsetIndex * 0.2;
-          const baseRotation = randomRotations[index];
+            const zIndex = experiences.length - offsetIndex;
+            const scale = 1 - offsetIndex * 0.035;
+            const opacity = offsetIndex > 2 ? 0 : 1 - offsetIndex * 0.22;
+            const blur = offsetIndex * 1.5;
+            const baseRotation = randomRotations[index];
+            const translateY = offsetIndex * -10;
 
-          // Responsive layout translation: offset stack vertically on desktop/tablets,
-          // but subtle adjustments for tight layouts on mobile screens
-          const translateY = offsetIndex * -10;
+            // Only show active card on mobile to prevent massive stack scrolling, OR render all stacked on desktop
+            const isVisibleOnMobile = offsetIndex === 0;
 
-          return (
-            <div
-              key={exp.company + index}
-              onClick={cycleTicket}
-              className={`absolute w-full max-w-sm cursor-pointer transition-all duration-500 ease-out rotate-1 select-none sm:max-w-xl md:max-w-none ${isCurrent ? "pointer-events-auto" : "pointer-events-auto hover:brightness-110"}`}
-              style={{
-                zIndex: zIndex,
-                opacity: opacity,
-                // Active/Top item drops rotation completely for 100% text reading clarity
-                transform: `translateY(${translateY}px) scale(${scale}) rotate(${isCurrent ? 0 : baseRotation}deg)`,
-                transformOrigin: "center center",
-              }}
-            >
-              <Ticket experience={exp} />
-            </div>
-          );
-        })}
+            return (
+              <div
+                key={exp.company + index}
+                onClick={cycleTicket}
+                className={`w-full cursor-pointer transition-all duration-500 ease-out select-none ${
+                  isVisibleOnMobile ? "block" : "hidden md:block"
+                } md:absolute md:top-0 md:left-0 md:right-0 md:mx-auto ${
+                  isCurrent
+                    ? "pointer-events-auto active:scale-98"
+                    : "pointer-events-auto hover:brightness-110"
+                }`}
+                style={{
+                  zIndex: zIndex,
+                  opacity: opacity,
+                  filter: `blur(${blur}px)`,
+                  transform: `translateY(${translateY}px) scale(${scale}) rotate(${
+                    isCurrent ? 0 : baseRotation
+                  }deg)`,
+                  transformOrigin: "center center",
+                }}
+              >
+                <Ticket experience={exp} />
+              </div>
+            );
+          })}
+        </Suspense>
       </div>
-    </div>
+    </section>
   );
 }
 

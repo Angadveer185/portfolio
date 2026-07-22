@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { gochi, splash, bree } from "@/lib/fonts";
+import { gochi, splash, bree, meddon } from "@/lib/fonts";
 import "./globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import ClickSpark from "@/components/ui/ClickSpark";
 import { COLORS } from "@/lib/colors";
+import { Toaster } from 'sonner';
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -24,8 +25,9 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", "font-sans", geist.variable)}
     >
       <body
-        className={`flex min-h-full flex-col ${gochi.variable} ${splash.variable} ${bree.variable}`}
+        className={`flex min-h-full flex-col ${meddon.variable} ${gochi.variable} ${splash.variable} ${bree.variable}`}
       >
+        <Toaster position="bottom-right" theme="dark" richColors />
         <ClickSpark
           sparkColor={COLORS.primary}
           sparkSize={12}

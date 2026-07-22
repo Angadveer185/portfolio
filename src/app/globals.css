@@ -83,6 +83,7 @@
   --font-gochi: var(--font-gochi);
   --font-splash: var(--font-splash);
   --font-bree: var(--font-bree);
+    --font-meddon: var(--font-meddon);
 }
 
 html {
@@ -307,4 +308,50 @@ body {
 
     }
 
+}
+
+/* ============================================
+   Custom Scrollbar
+============================================ */
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #e25543 #1e1e1e;
+}
+
+/* Chrome, Edge & Safari */
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+  border-left: 2px solid rgba(212, 186, 163, 0.08);
+}
+
+::-webkit-scrollbar-thumb {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15) 2px, transparent 3px),
+    radial-gradient(circle at 80% 60%, rgba(255,255,255,0.12) 1.5px, transparent 2.5px),
+    linear-gradient(180deg, #f06b58, #e25543, #c84335);
+  border: 3px solid #1e1e1e;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #ff816e 0%,
+    #f15d49 50%,
+    #d84537 100%
+  );
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #b93d31;
+}
+
+::-webkit-scrollbar-corner {
+  background: #1e1e1e;
 }
