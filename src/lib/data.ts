@@ -314,6 +314,6 @@ export const aboutData: AboutData = {
 
   stats: {
     projects: 5, // Based on 5+ projects completed
-    githubPushes: 600, // Based on 600+ solved problems
+    githubContributions: 0,
   },
 };

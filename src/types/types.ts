@@ -75,7 +75,7 @@ export interface Ability {
 
 export interface Stats {
   projects: number;
-  githubPushes: number;
+  githubContributions: number;
 }
 
 export interface AboutData {

@@ -11,7 +11,8 @@ export default function Projects() {
     <div className="relative flex flex-col">
       <SectionHeader id="projects" title="Projects" subtitle="My Creative Work" />
       <Doodle src="/doodles/Red_Gift.png" width={120} x={90} y={10} rotation={-18} />
-      <Doodle src="/doodles/Godzilla.png" width={200} x={10} y={40} rotation={15} />
+      <Doodle src="/doodles/Godzilla.png" width={200} x={10} y={95} rotation={15} />
+      <Doodle src="/doodles/Red_Cat.png" width={120} x={50} y={95} rotation={0} />
 
       {/* Showcase Container with Staggered Scroll Entrance */}
       <motion.div

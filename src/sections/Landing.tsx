@@ -5,8 +5,13 @@ import { Button } from "sketchbook-ui";
 import "sketchbook-ui/style.css";
 import { COLORS } from "@/lib/colors";
 import Tag from "@/components/ui/Tag";
-import Scene from "@/components/3-D/Scene";
 import Doodle from "@/components/ui/Doodle";
+import dynamic from "next/dynamic";
+
+const Scene = dynamic(() => import("@/components/3-D/Scene"), {
+  ssr: false,
+  loading: () => <div className="w-full h-screen bg-transparent" />,
+});
 
 import { useLoading } from "@/context/LoadingContext";
 
@@ -73,7 +78,7 @@ export default function Landing() {
           >
             {["Dev-Ops", "Java Programmer", "Full-Stack", "Game Developer"].map(
               (tag) => (
-                <Tag key={tag + Math.random()} text={tag} />
+                <Tag key={tag} text={tag} />
               ),
             )}
           </motion.div>

@@ -1,12 +1,13 @@
 import { Project } from "@/types/types";
 import Tag from "../ui/Tag";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 interface Props {
   project: Project;
 }
 
-export default function ProjectCard({ project }: Props) {
+const ProjectCard = memo(function ProjectCard({ project }: Props) {
   const achievementsRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
 
@@ -73,9 +74,11 @@ export default function ProjectCard({ project }: Props) {
         {/* Image & Link Buttons */}
         <div className="flex w-full flex-col gap-4 self-start">
           <div className="group relative aspect-video w-full overflow-hidden rounded-2xl border border-[#54463a] bg-black shadow-inner">
-            <img
+            <Image
               src={project.image}
               alt={project.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="pointer-events-none h-full w-full object-cover transition-transform duration-400 ease-out select-none group-hover:scale-104"
             />
           </div>
@@ -134,4 +137,6 @@ export default function ProjectCard({ project }: Props) {
       </div>
     </div>
   );
-}
+});
+
+export default ProjectCard;

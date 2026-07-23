@@ -7,14 +7,14 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, memo } from "react";
 
-export default function AvatarMagnet() {
+const AvatarMagnet = memo(function AvatarMagnet() {
   const ref = useRef<HTMLDivElement>(null);
 
   const [flipped, setFlipped] = useState(false);
 
-  const imagePath = "/images/Avatar2.png";
+  const imagePath = "/images/Avatar.png";
 
   // ---------------------------
   // Motion Values
@@ -124,13 +124,6 @@ transparent 55%
       <div className="absolute h-[320px] w-[320px] rounded-full border-[5px] border-dashed border-[#3E3124]/15" />
 
       <motion.div
-        style={{
-          x,
-          y,
-          rotateX: rx,
-          rotateY: ry,
-          transformStyle: "preserve-3d",
-        }}
         animate={{
           y: [0, -5, 0],
         }}
@@ -139,78 +132,90 @@ transparent 55%
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="will-change-transform"
       >
         <motion.div
-          animate={{
-            rotateY: flipped ? 180 : 0,
-          }}
-          transition={{
-            duration: 0.8,
-            ease: [0.22, 1, 0.36, 1],
-          }}
           style={{
+            x,
+            y,
+            rotateX: rx,
+            rotateY: ry,
             transformStyle: "preserve-3d",
           }}
-          className="relative h-[520px] w-[380px]"
+          className="will-change-transform"
         >
-          {/* FRONT */}
-
-          <div
-            className="absolute inset-0 overflow-hidden rounded-[28px] border-[5px] border-[#3E3124] bg-[#F7E8D8] shadow-[0_20px_45px_rgba(0,0,0,.28)]"
-            style={{
-              backfaceVisibility: "hidden",
+          <motion.div
+            animate={{
+              rotateY: flipped ? 180 : 0,
             }}
+            transition={{
+              duration: 0.8,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            style={{
+              transformStyle: "preserve-3d",
+            }}
+            className="relative h-[520px] w-[380px]"
           >
-            <Image
-              sizes="full"
-              src={imagePath}
-              alt="Avatar"
-              fill
-              className="pointer-events-none object-cover select-none"
-            />
+            {/* FRONT */}
 
-            <motion.div
+            <div
+              className="absolute inset-0 overflow-hidden rounded-[28px] border-[5px] border-[#3E3124] bg-[#F7E8D8] shadow-[0_20px_45px_rgba(0,0,0,.28)]"
               style={{
-                background,
+                backfaceVisibility: "hidden",
               }}
-              className="pointer-events-none absolute inset-0"
-            />
+            >
+              <Image
+                sizes="full"
+                src={imagePath}
+                alt="Avatar"
+                fill
+                className="pointer-events-none object-cover select-none"
+              />
 
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10" />
-          </div>
+              <motion.div
+                style={{
+                  background,
+                }}
+                className="pointer-events-none absolute inset-0"
+              />
 
-          {/* BACK */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10" />
+            </div>
 
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center rounded-[28px] border-[5px] border-[#3E3124] bg-[#F8EDDF] px-10 text-center shadow-[0_20px_45px_rgba(0,0,0,.28)]"
-            style={{
-              backfaceVisibility: "hidden",
-              transform: "rotateY(180deg)",
-            }}
-          >
-            <h2
-              className="font-meddon text-3xl text-[#3E3124] md:text-4xl lg:text-5xl"
+            {/* BACK */}
+
+            <div
+              className="absolute inset-0 flex flex-col items-center justify-center rounded-[28px] border-[5px] border-[#3E3124] bg-[#F8EDDF] px-10 text-center shadow-[0_20px_45px_rgba(0,0,0,.28)]"
+              style={{
+                backfaceVisibility: "hidden",
+                transform: "rotateY(180deg)",
+              }}
+            >
+              <h2
+                className="font-meddon text-3xl text-[#3E3124] md:text-4xl lg:text-5xl"
               //   style={{
               //     fontFamily: '"Great Vibes", cursive',
               //   }}
-            >
-              Angadveer
-            </h2>
+              >
+                Angadveer
+              </h2>
 
-            <div className="my-8 h-px w-40 bg-[#3E3124]/20" />
+              <div className="my-8 h-px w-40 bg-[#3E3124]/20" />
 
-            <p className="max-w-xs text-lg leading-8 text-[#5A4A3B]">
-              Thanks for taking the time to explore my little corner of the
-              internet.
-            </p>
+              <p className="max-w-xs text-lg leading-8 text-[#5A4A3B]">
+                Thanks for taking the time to explore my little corner of the
+                internet.
+              </p>
 
-            <p className="mt-8 text-sm text-[#8B7663] italic">
-              "See you somewhere in the source code."
-            </p>
-          </div>
+              <p className="mt-8 text-sm text-[#8B7663] italic">
+                "See you somewhere in the source code."
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
       </motion.div>
     </div>
   );
-}
+});
+
+export default AvatarMagnet;

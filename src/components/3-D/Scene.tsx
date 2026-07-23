@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
+import { useEffect, Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useProgress } from "@react-three/drei";
 import Ash from "@/components/Models/Ash";
@@ -9,7 +9,7 @@ import { useLoading } from "@/context/LoadingContext";
 function ProgressTracker() {
   const { progress } = useProgress();
   const { setProgress } = useLoading();
-
+  
   useEffect(() => {
     setProgress(progress);
   }, [progress, setProgress]);
@@ -18,8 +18,9 @@ function ProgressTracker() {
 }
 
 export default function Scene() {
+  const [isGrabbing, setIsGrabbing] = useState(false);
   return (
-    <div className="relative w-full h-screen">
+    <div className={`relative w-full h-screen ${isGrabbing ? "cursor-grabbing" : "cursor-grab"}`}>
       <Canvas
         camera={{
           position: [0, -4, 6],
@@ -40,6 +41,8 @@ export default function Scene() {
           maxPolarAngle={Math.PI / 2}
           enableZoom={false}
           enablePan={false}
+          onStart={() => setIsGrabbing(true)}
+          onEnd={() => setIsGrabbing(false)}
         />
       </Canvas>
     </div>

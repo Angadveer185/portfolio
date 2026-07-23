@@ -2,6 +2,8 @@
 
 import { type ReactNode, useCallback, useEffect, useRef } from "react";
 
+import { useLoading } from "@/context/LoadingContext";
+
 interface ClickSparkProps {
   sparkColor?: string;
   sparkSize?: number;
@@ -30,6 +32,7 @@ function ClickSpark({
   extraScale = 1,
   children,
 }: ClickSparkProps) {
+  const { isLoading } = useLoading();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sparksRef = useRef<Spark[]>([]);
   const animationFrameRef = useRef<number | null>(null);
@@ -121,17 +124,31 @@ function ClickSpark({
     }
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.resetTransform();
+        ctx.scale(dpr, dpr);
+      }
     };
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
+    // Also trigger resize after a small delay when loading completes to capture correct dimensions
+    let timer: NodeJS.Timeout;
+    if (!isLoading) {
+      timer = setTimeout(resizeCanvas, 100);
+    }
+
     return () => {
       window.removeEventListener("resize", resizeCanvas);
+      if (timer) clearTimeout(timer);
     };
-  }, []);
+  }, [isLoading]);
 
   useEffect(() => {
     const handlePointerDown = (event: PointerEvent) => {

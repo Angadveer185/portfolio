@@ -1,14 +1,16 @@
 "use client";
 
 import Navbar from "@/components/ui/NavBar";
-import About from "@/sections/About";
-import Contact from "@/sections/Contact";
-import Experience from "@/sections/Experience";
-import Footer from "@/sections/Footer";
 import Landing from "@/sections/Landing";
-import Projects from "@/sections/Projects";
-import Resume from "@/sections/Resume";
-import Skills from "@/sections/Skills";
+import dynamic from "next/dynamic";
+
+const About = dynamic(() => import("@/sections/About"), { ssr: true });
+const Skills = dynamic(() => import("@/sections/Skills"), { ssr: false });
+const Projects = dynamic(() => import("@/sections/Projects"), { ssr: false });
+const Experience = dynamic(() => import("@/sections/Experience"), { ssr: false });
+const Resume = dynamic(() => import("@/sections/Resume"), { ssr: false });
+const Contact = dynamic(() => import("@/sections/Contact"), { ssr: false });
+const Footer = dynamic(() => import("@/sections/Footer"), { ssr: true });
 
 export default function Home() {
   return (

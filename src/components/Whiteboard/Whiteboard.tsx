@@ -1,12 +1,13 @@
 "use client";
 
+import { memo } from "react";
 import WhiteboardBackground from "./WhiteboardBackground";
 import GoalCard from "./GoalCard";
 import CoreAbilities from "./CoreAbilities";
 import AvatarCard from "./AvatarCard";
 import StatsCard from "./StatsCard";
 
-export default function Whiteboard() {
+const Whiteboard = memo(function Whiteboard() {
   return (
     <section className="relative w-full px-3 py-6 sm:px-6 sm:py-12 lg:px-16">
       <div
@@ -51,4 +52,6 @@ export default function Whiteboard() {
       </div>
     </section>
   );
-}
+});
+
+export default Whiteboard;

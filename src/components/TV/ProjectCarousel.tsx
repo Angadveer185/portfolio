@@ -30,18 +30,9 @@ export default function ProjectCarousel({
         )}
       </AnimatePresence>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={project.id}
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 1 }}
-          transition={{ duration: 0 }}
-          className="block h-full w-full"
-        >
-          <ProjectCard project={project} />
-        </motion.div>
-      </AnimatePresence>
+      <div className="block h-full w-full">
+        <ProjectCard project={project} />
+      </div>
     </div>
   );
 }

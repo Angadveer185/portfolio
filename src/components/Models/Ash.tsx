@@ -4,6 +4,9 @@ import { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { useLoading } from "@/context/LoadingContext";
 
+const TARGET_POS = new THREE.Vector3(0, 0, 0);
+const TARGET_SCALE = new THREE.Vector3(1, 1, 1);
+
 export default function Ash(props: ThreeElements["group"]) {
   const { scene } = useGLTF("/models/Ash.glb");
   const innerRef = useRef<THREE.Group>(null);
@@ -28,8 +31,8 @@ export default function Ash(props: ThreeElements["group"]) {
     }
 
     // Lerp to target: position 0, scale 1, rotation 0
-    innerRef.current.position.lerp(new THREE.Vector3(0, 0, 0), 0.04);
-    innerRef.current.scale.lerp(new THREE.Vector3(1, 1, 1), 0.04);
+    innerRef.current.position.lerp(TARGET_POS, 0.04);
+    innerRef.current.scale.lerp(TARGET_SCALE, 0.04);
     
     innerRef.current.rotation.x = THREE.MathUtils.lerp(innerRef.current.rotation.x, 0, 0.04);
     innerRef.current.rotation.y = THREE.MathUtils.lerp(innerRef.current.rotation.y, 0, 0.04);

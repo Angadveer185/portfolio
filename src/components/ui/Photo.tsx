@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 
 interface PhotoProps {
   src: string;
@@ -168,9 +169,11 @@ export default function Photo({
       }}
     >
       <div className="pointer-events-none relative h-full w-full overflow-hidden rounded-md bg-neutral-100">
-        <img
+        <Image
           src={src}
           alt={caption || "Draggable component asset"}
+          fill
+          sizes="(max-width: 768px) 100vw, 300px"
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           draggable={false}
         />

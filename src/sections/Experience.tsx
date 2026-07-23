@@ -30,10 +30,10 @@ function Experience() {
 
   return (
     <section className="bg-bg-tertiary relative flex min-h-screen w-full flex-col justify-start px-4 py-12 sm:px-8 md:py-20 lg:py-24 -z-10">
-      <Doodle src="/doodles/Red_Ramen.png" width={120} x={80} y={10} rotation={-22} />
-      <Doodle src="/doodles/Rabbit.png" width={120} x={5} y={40} rotation={28} />
-      <Doodle src="/doodles/Bird_2.png" width={120} x={85} y={80} rotation={-14} />
-      <Doodle src="/doodles/Red_Cat.png" width={120} x={50} y={90} rotation={9} />
+      
+      <Doodle src="/doodles/Rabbit.png" width={120} x={7} y={40} rotation={28} className="hidden lg:block"/>
+      <Doodle src="/doodles/Bird_2.png" width={120} x={95} y={80} rotation={-14} className="hidden lg:block"/>
+      <Doodle src="/doodles/Flower.png" width={80} x={20} y={90} rotation={-27} className="hidden lg:block"/>
       {/* Header Container with Scroll Entrance */}
       <motion.div
         className="mx-auto w-full max-w-5xl pb-10 sm:pb-14"

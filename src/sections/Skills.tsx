@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { motion, Variants } from "framer-motion";
 import Photo from "@/components/ui/Photo";
 import { SKILL_DATA } from "@/lib/data";
@@ -63,8 +63,7 @@ function Skills() {
     <div className="relative min-h-screen overflow-x-hidden pb-20">
       {/* Header Section */}
       <SectionHeader id="skills" title="Skills" subtitle="My Palette" />
-      <Doodle src="/doodles/Bird_1.png" width={120} x={10} y={20} rotation={-8} />
-      <Doodle src="/doodles/Camera.png" width={140} x={70} y={50} rotation={22} />
+      <Doodle src="/doodles/Camera.png" width={140} x={75} y={15} rotation={22} />
 
       {/* Stack/Overlap Wrapper */}
       <motion.div
@@ -151,21 +150,14 @@ function Skills() {
                     </h3>
                   </div>
 
-                  <div className="bg-bg-primary/60 relative mt-2 min-h-[140px] sm:min-h-[160px] flex-1 overflow-hidden rounded-xl border border-neutral-800 p-2 sm:p-3">
+                   <div className="bg-bg-primary/60 relative mt-2 min-h-[140px] sm:min-h-[160px] flex-1 overflow-hidden rounded-xl border border-neutral-800 p-2 sm:p-3">
                     {activeSkill.tech.map((t, idx) => {
-                      const timeSeed =
-                        sessionTime + idx * 43 + t.charCodeAt(0) * 17;
-
-                      const seedX = timeSeed % 60;
-                      const seedY = (timeSeed >> 2) % 35;
-                      const calculatedY = 15 + (idx % 2 === 0 ? 10 : 50) + seedY * 0.6;
-
                       return (
                         <DraggableBubble
                           key={t}
                           label={t}
-                          defaultX={10 + seedX * 1.1}
-                          defaultY={calculatedY}
+                          index={idx}
+                          totalCount={activeSkill.tech.length}
                         />
                       );
                     })}
@@ -222,4 +214,4 @@ function Skills() {
   );
 }
 
-export default Skills;
+export default memo(Skills);

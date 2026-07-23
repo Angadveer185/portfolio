@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import ClickSpark from "@/components/ui/ClickSpark";
 import { COLORS } from "@/lib/colors";
 import { Toaster } from "sonner";
-import { LoadingProvider } from "@/context/LoadingContext"; // <--- Add this
+import { LoadingProvider } from "@/context/LoadingContext";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -31,7 +31,7 @@ export default function RootLayout({
         <Toaster position="bottom-right" theme="dark" richColors />
         <LoadingProvider>
           <ClickSpark
-            sparkColor={COLORS.primary}
+            sparkColor={COLORS.secondary}
             sparkSize={12}
             sparkRadius={15}
             sparkCount={8}
