@@ -17,7 +17,7 @@ export default function ProjectShowcase() {
       <div className="relative flex w-full max-w-7xl flex-col rounded-[28px] border border-[#5b4d42] bg-[#2B2825] sm:rounded-[34px]">
         <div />
 
-        <div className="w-full flex-1 p-2 sm:p-4 h-[80vh]">
+        <div className="w-full flex-1 p-2 sm:p-4 h-[30rem] sm:h-[35rem] md:h-[40rem] lg:h-[48rem] xl:h-[52rem]">
           <CRTScreen
             project={player.project}
             direction={player.direction}
@@ -55,15 +55,14 @@ export default function ProjectShowcase() {
         <div className="flex w-full flex-col items-center justify-between gap-3 rounded-b-[28px] border-t border-[#44372E] bg-[#252220] px-3 py-2 sm:flex-row sm:gap-4 sm:px-4 sm:rounded-b-[34px] md:gap-6 md:px-6">
           <div className="flex shrink-0 items-center gap-2">
             <div
-              className={`h-3 w-3 shrink-0 rounded-full transition-all duration-300 ${
-                player.playerState === "playing"
+              className={`h-3 w-3 shrink-0 rounded-full transition-all duration-300 ${player.playerState === "playing"
                   ? "bg-green-400 shadow-[0_0_12px_#22c55e]"
                   : player.playerState === "loading"
                     ? "bg-yellow-300 shadow-[0_0_12px_gold]"
                     : player.playerState === "paused"
                       ? "bg-orange-400 shadow-[0_0_12px_orange]"
                       : "bg-red-500 shadow-[0_0_12px_red]"
-              } `}
+                } `}
             />
             <p className="font-bree text-md tracking-[0.3em] whitespace-nowrap text-[#D4BAA3] lg:text-xl">
               DVD VIDEO

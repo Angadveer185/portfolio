@@ -4,6 +4,7 @@ import React, { useState, useMemo, lazy, Suspense } from "react";
 import { experiences } from "@/lib/data";
 import SectionHeader from "@/components/ui/SectionHeading";
 import { motion } from "framer-motion";
+import Doodle from "@/components/ui/Doodle";
 
 // Lazy load the Ticket component
 const Ticket = lazy(() => import("@/components/Ticket/Ticket"));
@@ -29,6 +30,10 @@ function Experience() {
 
   return (
     <section className="bg-bg-tertiary relative flex min-h-screen w-full flex-col justify-start px-4 py-12 sm:px-8 md:py-20 lg:py-24 -z-10">
+      <Doodle src="/doodles/Red_Ramen.png" width={120} x={80} y={10} rotation={-22} />
+      <Doodle src="/doodles/Rabbit.png" width={120} x={5} y={40} rotation={28} />
+      <Doodle src="/doodles/Bird_2.png" width={120} x={85} y={80} rotation={-14} />
+      <Doodle src="/doodles/Red_Cat.png" width={120} x={50} y={90} rotation={9} />
       {/* Header Container with Scroll Entrance */}
       <motion.div
         className="mx-auto w-full max-w-5xl pb-10 sm:pb-14"

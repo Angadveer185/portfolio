@@ -1,13 +1,37 @@
 import { Project } from "@/types/types";
 import Tag from "../ui/Tag";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   project: Project;
 }
 
 export default function ProjectCard({ project }: Props) {
+  const achievementsRef = useRef<HTMLDivElement>(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
+
+  useEffect(() => {
+    const element = achievementsRef.current;
+    if (!element) return;
+
+    const checkOverflow = () => {
+      setHasOverflow(element.scrollHeight > element.clientHeight);
+    };
+
+    checkOverflow();
+
+    const resizeObserver = new ResizeObserver(() => {
+      checkOverflow();
+    });
+    resizeObserver.observe(element);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [project.achievements]);
+
   return (
-    <div className="grid h-full w-full grid-rows-[1fr_auto] gap-4 overflow-hidden rounded-3xl p-4 shadow-2xl backdrop-blur-sm sm:gap-5 md:p-6 lg:gap-8">
+    <div className={`grid h-full w-full grid-rows-[1fr_auto] gap-4 overflow-hidden rounded-3xl p-4 shadow-2xl backdrop-blur-sm sm:gap-5 md:p-6 transition-all duration-200 ${hasOverflow ? 'lg:gap-3' : 'lg:gap-8'}`}>
       {/* Scrollable upper content area */}
       <div className="grid grid-cols-1 items-start gap-4 overflow-y-auto lg:grid-cols-[1.2fr_.8fr] lg:gap-10">
         <div className="flex flex-col justify-start gap-4">
@@ -93,7 +117,10 @@ export default function ProjectCard({ project }: Props) {
         <h4 className="font-bree tracking-widest text-[#E9D3BB]/70 uppercase">
           Key Achievements
         </h4>
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+        <div
+          ref={achievementsRef}
+          className="grid grid-cols-1 gap-1 md:grid-cols-2 min-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-[#54463a]/30"
+        >
           {project.achievements?.map((achievement, index) => (
             <div
               key={index}

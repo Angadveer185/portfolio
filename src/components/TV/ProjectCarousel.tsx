@@ -17,7 +17,7 @@ export default function ProjectCarousel({
   playerState,
 }: Props) {
   return (
-    <div className="relative grid w-full min-h-[30rem] grid-cols-1 grid-rows-1 overflow-visible sm:min-h-[32rem] md:min-h-[36rem]  lg:min-h-[38rem]">
+    <div className="relative grid min-h-[30rem] h-full w-full grid-cols-1 grid-rows-1 overflow-hidden">
       <AnimatePresence>
         {playerState === "loading" && (
           <motion.div

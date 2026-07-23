@@ -6,6 +6,7 @@ import Photo from "@/components/ui/Photo";
 import { SKILL_DATA } from "@/lib/data";
 import DraggableBubble from "@/components/ui/DraggableBubble";
 import SectionHeader from "@/components/ui/SectionHeading";
+import Doodle from "@/components/ui/Doodle";
 
 type SkillKey = (typeof SKILL_DATA)[number]["key"];
 
@@ -47,21 +48,23 @@ function Skills() {
   const [selectedSkillKey, setSelectedSkillKey] = useState<SkillKey>(
     SKILL_DATA[0]?.key ?? "frontend",
   );
-  
+
   const [sessionTime, setSessionTime] = useState<number>(0);
 
-    useEffect(() => {
-      // Populate sessionTime only after mounting on client
-      setSessionTime(Date.now());
-    }, []);
+  useEffect(() => {
+    // Populate sessionTime only after mounting on client
+    setSessionTime(Date.now());
+  }, []);
 
   const activeSkill =
     SKILL_DATA.find((item) => item.key === selectedSkillKey) || SKILL_DATA[0];
 
   return (
-    <div className="min-h-screen overflow-x-hidden pb-20">
+    <div className="relative min-h-screen overflow-x-hidden pb-20">
       {/* Header Section */}
       <SectionHeader id="skills" title="Skills" subtitle="My Palette" />
+      <Doodle src="/doodles/Bird_1.png" width={120} x={10} y={20} rotation={-8} />
+      <Doodle src="/doodles/Camera.png" width={140} x={70} y={50} rotation={22} />
 
       {/* Stack/Overlap Wrapper */}
       <motion.div
@@ -112,21 +115,21 @@ function Skills() {
 
               // Small deviations from center (40%, 15%) for natural scatter
               const slightRotation = (index % 2 === 0 ? 1 : -1) * (3 + index * 2.5);
-              const slightX = 40 + (index % 3 - 1) * 2.5; 
-              const slightY = 15 + (index % 2 === 0 ? 1 : -1) * 1.5; 
+              const slightX = 40 + (index % 3 - 1) * 2.5;
+              const slightY = 15 + (index % 2 === 0 ? 1 : -1) * 1.5;
 
               return (
-                    <Photo
-                      key={skill.key}
-                      src={skill.photo.src}
-                      size={skill.photo.size}
-                      rotation={slightRotation}
-                      defaultX={slightX}
-                      defaultY={slightY}
-                      orientation={skill.photo.orientation}
-                      caption={skill.photo.caption}
-                      onClick={() => setSelectedSkillKey(skill.key as SkillKey)}
-                    />
+                <Photo
+                  key={skill.key}
+                  src={skill.photo.src}
+                  size={skill.photo.size}
+                  rotation={slightRotation}
+                  defaultX={slightX}
+                  defaultY={slightY}
+                  orientation={skill.photo.orientation}
+                  caption={skill.photo.caption}
+                  onClick={() => setSelectedSkillKey(skill.key as SkillKey)}
+                />
               );
             })}
 

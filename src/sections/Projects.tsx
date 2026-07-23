@@ -4,11 +4,14 @@ import ProjectShowcase from "@/components/TV/ProjectShowcase";
 import SectionHeader from "@/components/ui/SectionHeading";
 import React from "react";
 import { motion } from "framer-motion";
+import Doodle from "@/components/ui/Doodle";
 
 export default function Projects() {
   return (
-    <div className="flex flex-col">
-        <SectionHeader id="projects" title="Projects" subtitle="My Creative Work" />
+    <div className="relative flex flex-col">
+      <SectionHeader id="projects" title="Projects" subtitle="My Creative Work" />
+      <Doodle src="/doodles/Red_Gift.png" width={120} x={90} y={10} rotation={-18} />
+      <Doodle src="/doodles/Godzilla.png" width={200} x={10} y={40} rotation={15} />
 
       {/* Showcase Container with Staggered Scroll Entrance */}
       <motion.div

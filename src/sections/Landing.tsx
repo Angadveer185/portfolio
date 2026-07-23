@@ -8,6 +8,8 @@ import Tag from "@/components/ui/Tag";
 import Scene from "@/components/3-D/Scene";
 import Doodle from "@/components/ui/Doodle";
 
+import { useLoading } from "@/context/LoadingContext";
+
 // Container variant for orchestration & staggered children
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -34,17 +36,19 @@ const itemVariants: Variants = {
 };
 
 export default function Landing() {
+  const { isLoading } = useLoading();
+
   return (
     <section className="relative flex min-h-screen w-full overflow-hidden" id="home">
       <Doodle src="/doodles/Star.png" width={1} x={7} y={12} rotation={-12} />
-      <Doodle src="/doodles/Cat.png" width={150} x={50} y={75} rotation={18} className="" />
+      <Doodle src="/doodles/Cat.png" width={150} x={50} y={75} rotation={18} />
       {/* LEFT */}
       <div className="flex w-full items-center justify-center px-8 py-20 lg:w-[50%] lg:px-20">
         <motion.div
           className="w-full max-w-2xl"
           variants={containerVariants}
           initial="hidden"
-          animate="visible"
+          animate={isLoading ? "hidden" : "visible"}
         >
           {/* Greeting */}
           <motion.p
