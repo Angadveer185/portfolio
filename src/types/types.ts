@@ -1,3 +1,4 @@
+import { IconType } from "react-icons";
 
 export type DoodleProps = {
   src: string;
@@ -32,19 +33,23 @@ export interface SkillEntry {
 }
 
 export interface Project {
-    id: number;
-    title: string;
-    description: string;
-    image: string;
-    technologies: string[];
-    github: string;
-    demo: string;
-    achievements: string[]; // 1. Added achievements property
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+
+  technologies: Technology[];
+
+  github?: string | null;
+  demo: string;
+
+  achievements: string[];
 }
 
 export interface Technology {
   name: string;
-  icon?: string;
+  icon: IconType;
+  color: string;
 }
 
 export interface Experience {

@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import { FaGithub, FaLinkedin, FaInstagram, FaDiscord } from "react-icons/fa6";
 import { Socials } from "@/lib/data";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 import {
   Mail,
   RotateCcw,
@@ -98,7 +101,7 @@ export default function IPhone({ children }: IPhoneProps) {
 
   const handleKeyDown = (
     e: React.KeyboardEvent,
-    fieldType: "input" | "textarea"
+    fieldType: "input" | "textarea",
   ) => {
     if (e.key === "Enter" && !e.shiftKey && fieldType === "input") {
       e.preventDefault();
@@ -107,7 +110,16 @@ export default function IPhone({ children }: IPhoneProps) {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-[380px] justify-center p-2 select-none sm:p-4">
+    <motion.div
+      className="mx-auto flex w-full max-w-[380px] justify-center p-2 select-none sm:p-4"
+      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{
+        duration: 0.7,
+        ease: [0.21, 1.11, 0.81, 0.99], // Subtle spring effect on entrance
+      }}
+    >
       {/* IPHONE OUTER BODY */}
       <div className="relative aspect-[9/19.5] w-full overflow-hidden rounded-[48px] border-[10px] border-[#222325] bg-[#0c0c0e] shadow-2xl ring-1 ring-white/10">
         {/* Dynamic Island Notch */}
@@ -167,7 +179,7 @@ export default function IPhone({ children }: IPhoneProps) {
                 <div className="flex-1 overflow-y-auto p-3.5 select-text">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="rounded-lg bg-white/10 p-1.5 text-white">
+                      <div className="bg-bg-tertiary rounded-lg p-1.5 text-white">
                         <Mail size={14} />
                       </div>
                       <h2 className="text-xs font-bold tracking-wide text-white">
@@ -199,7 +211,7 @@ export default function IPhone({ children }: IPhoneProps) {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         onKeyDown={(e) => handleKeyDown(e, "input")}
-                        className="w-full rounded-lg border border-neutral-700 bg-neutral-950 p-2 text-xs text-white placeholder-neutral-600 shadow-inner outline-none transition-colors focus:border-indigo-500 disabled:opacity-50"
+                        className="focus:border-bg-tertiary w-full rounded-lg border border-neutral-700 bg-neutral-950 p-2 text-xs text-white placeholder-neutral-600 shadow-inner transition-colors outline-none disabled:opacity-50"
                       />
                     </div>
 
@@ -217,7 +229,7 @@ export default function IPhone({ children }: IPhoneProps) {
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
                         onKeyDown={(e) => handleKeyDown(e, "input")}
-                        className="w-full rounded-lg border border-neutral-700 bg-neutral-950 p-2 text-xs text-white placeholder-neutral-600 shadow-inner outline-none transition-colors focus:border-indigo-500 disabled:opacity-50"
+                        className="focus:border-bg-tertiary w-full rounded-lg border border-neutral-700 bg-neutral-950 p-2 text-xs text-white placeholder-neutral-600 shadow-inner transition-colors outline-none disabled:opacity-50"
                       />
                     </div>
 
@@ -235,7 +247,7 @@ export default function IPhone({ children }: IPhoneProps) {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         onKeyDown={(e) => handleKeyDown(e, "textarea")}
-                        className="w-full resize-none rounded-lg border border-neutral-700 bg-neutral-950 p-2 text-xs text-white placeholder-neutral-600 shadow-inner outline-none transition-colors focus:border-indigo-500 disabled:opacity-50"
+                        className="focus:border-bg-tertiary w-full resize-none rounded-lg border border-neutral-700 bg-neutral-950 p-2 text-xs text-white placeholder-neutral-600 shadow-inner transition-colors outline-none disabled:opacity-50"
                       />
                     </div>
 
@@ -252,7 +264,7 @@ export default function IPhone({ children }: IPhoneProps) {
                       <button
                         type="submit"
                         disabled={isSending}
-                        className="flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3.5 py-1.5 text-[10px] font-bold text-white shadow-md transition-all hover:bg-indigo-500 active:scale-95 disabled:opacity-50"
+                        className="bg-bg-tertiary hover:bg-bg-tertiary/90 flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-[10px] font-bold text-white shadow-md transition-all active:scale-95 disabled:opacity-50"
                       >
                         {isSending && (
                           <Loader2 size={11} className="animate-spin" />
@@ -272,8 +284,14 @@ export default function IPhone({ children }: IPhoneProps) {
                     </span>
                   </div>
                   <div className="flex items-center gap-2.5">
-                    <Share size={12} className="cursor-pointer hover:text-white" />
-                    <BookOpen size={12} className="cursor-pointer hover:text-white" />
+                    <Share
+                      size={12}
+                      className="cursor-pointer hover:text-white"
+                    />
+                    <BookOpen
+                      size={12}
+                      className="cursor-pointer hover:text-white"
+                    />
                   </div>
                 </div>
               </div>
@@ -286,6 +304,6 @@ export default function IPhone({ children }: IPhoneProps) {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

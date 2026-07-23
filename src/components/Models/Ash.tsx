@@ -6,3 +6,5 @@ export default function Ash(props: ThreeElements["group"]) {
 
   return <primitive object={scene} {...props} />;
 }
+
+useGLTF.preload("/models/Ash.glb");

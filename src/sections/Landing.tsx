@@ -6,6 +6,7 @@ import "sketchbook-ui/style.css";
 import { COLORS } from "@/lib/colors";
 import Tag from "@/components/ui/Tag";
 import Scene from "@/components/3-D/Scene";
+import Doodle from "@/components/ui/Doodle";
 
 // Container variant for orchestration & staggered children
 const containerVariants: Variants = {
@@ -34,7 +35,9 @@ const itemVariants: Variants = {
 
 export default function Landing() {
   return (
-    <section className="flex min-h-screen w-full overflow-hidden" id="home">
+    <section className="relative flex min-h-screen w-full overflow-hidden" id="home">
+      <Doodle src="/doodles/Star.png" width={1} x={7} y={12} rotation={-12} />
+      <Doodle src="/doodles/Cat.png" width={150} x={50} y={75} rotation={18} className="" />
       {/* LEFT */}
       <div className="flex w-full items-center justify-center px-8 py-20 lg:w-[50%] lg:px-20">
         <motion.div
@@ -84,7 +87,7 @@ export default function Landing() {
           {/* Buttons */}
           <motion.div
             variants={itemVariants}
-            className="mt-12 flex flex-wrap gap-6"
+            className="mt-12 flex flex-wrap gap-6 sm:gap-4"
           >
             <Button
               size="sm"

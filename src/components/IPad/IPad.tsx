@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import { resumeData } from "./ResumeData";
-import { Mail, Phone, Download, Share2 } from "lucide-react";
+import { Mail, Phone, Download } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 function IPad() {
   const { personal, education, experience, projects, skills, honors } = resumeData;
@@ -10,7 +13,7 @@ function IPad() {
   // Resume PDF download handler
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/resume.pdf"; // Path to your PDF file in the public directory
+    link.href = "/resume.pdf";
     link.download = `${personal.name.replace(/\s+/g, "_")}_Resume.pdf`;
     document.body.appendChild(link);
     link.click();
@@ -18,8 +21,16 @@ function IPad() {
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-sm select-none transition-all duration-300 sm:max-w-xl md:max-w-4xl">
-      
+    <motion.div
+      className="relative mx-auto w-full max-w-sm select-none transition-all duration-300 sm:max-w-xl md:max-w-4xl"
+      initial={{ opacity: 0, y: 50, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1], // Custom smooth cubic-bezier curve
+      }}
+    >
       {/* REALISTIC HARDWARE BUTTONS */}
       {/* Top Power Edge Button */}
       <button 
@@ -61,13 +72,6 @@ function IPad() {
               <Download size={12} className="text-neutral-800" />
               <span className="hidden sm:inline">Export PDF</span>
             </button>
-            {/* <button 
-              onClick={handleDownload}
-              className="p-1 rounded-full hover:bg-black/5 transition-colors cursor-pointer"
-              title="Share / Save"
-            >
-              <Share2 size={13} />
-            </button> */}
           </div>
 
           {/* Animated Black Screen Overlay for Power On/Off */}
@@ -77,7 +81,7 @@ function IPad() {
             }`} 
           />
 
-          {/* Resume Sheet Content (UNTOUCHED) */}
+          {/* Resume Sheet Content */}
           <div className="w-full h-full flex flex-col justify-between gap-4">
             
             {/* HEADER SECTION */}
@@ -199,7 +203,7 @@ function IPad() {
 
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

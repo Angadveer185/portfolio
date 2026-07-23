@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useState, useRef } from "react";
 import { FaGithub, FaLinkedin, FaInstagram, FaDiscord } from "react-icons/fa6";
 import { Socials } from "@/lib/data";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 import {
   Mail,
   ArrowLeft,
@@ -132,7 +135,16 @@ export default function Macbook({ children }: MacbookProps) {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center p-2 select-none sm:p-4">
+    <motion.div
+      className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center p-2 select-none sm:p-4"
+      initial={{ opacity: 0, y: 50, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1], // Custom smooth ease-out curve
+      }}
+    >
       {/* LAPTOP SCREEN (LID) */}
       <div className="relative aspect-[16/10] w-full overflow-hidden rounded-t-[1.2rem] border-[2px] border-b-0 border-[#38393a] bg-[#0c0c0e] shadow-2xl ring-1 ring-black/40 sm:rounded-t-[1.8rem] sm:border-[4px]">
         {/* Inner Shiny Gloss Bezel Edge */}
@@ -200,7 +212,7 @@ export default function Macbook({ children }: MacbookProps) {
                 {/* BROWSER MOCKUP WINDOW (DRAGGABLE) */}
                 <div 
                   style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
-                  className="z-10 flex flex-1 flex-col overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/90 text-neutral-200 shadow-2xl backdrop-blur-md md:col-span-9 md:my-auto md:h-[96%] transition-transform duration-75 ease-out"
+                  className="z-10 flex flex-1 flex-col overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/90 text-neutral-200 shadow-2xl backdrop-blur-md transition-transform duration-75 ease-out md:col-span-9 md:my-auto md:h-[96%]"
                 >
                   {/* Browser Window Header (Draggable Handle) */}
                   <div 
@@ -326,7 +338,7 @@ export default function Macbook({ children }: MacbookProps) {
                             type="submit"
                             tabIndex={4}
                             disabled={isSending}
-                            className="bg-bg-tertiary hover:bg-bg-tertiary/90 flex items-center gap-1.5 cursor-pointer rounded-md px-3 py-1 text-[10px] font-bold text-white shadow-md transition-all active:scale-95 disabled:opacity-50 sm:px-4 sm:py-1.5 sm:text-[11px]"
+                            className="bg-bg-tertiary hover:bg-bg-tertiary/90 flex cursor-pointer items-center gap-1.5 rounded-md px-3 py-1 text-[10px] font-bold text-white shadow-md transition-all active:scale-95 disabled:opacity-50 sm:px-4 sm:py-1.5 sm:text-[11px]"
                           >
                             {isSending && <Loader2 size={12} className="animate-spin" />}
                             {isSending ? "Sending..." : "Send Message"}
@@ -362,6 +374,6 @@ export default function Macbook({ children }: MacbookProps) {
         {/* Right Plastic Support Foot */}
         <div className="absolute right-[8%] bottom-[-2px] h-[2px] w-[5%] rounded-b-full bg-black/70 blur-[0.5px] sm:bottom-[-3px] sm:h-[4px] sm:blur-[1px]" />
       </div>
-    </div>
+    </motion.div>
   );
 }

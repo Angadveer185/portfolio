@@ -1,6 +1,9 @@
+"use client";
+
 import React, { useState, useMemo, lazy, Suspense } from "react";
 import { experiences } from "@/lib/data";
 import SectionHeader from "@/components/ui/SectionHeading";
+import { motion } from "framer-motion";
 
 // Lazy load the Ticket component
 const Ticket = lazy(() => import("@/components/Ticket/Ticket"));
@@ -26,13 +29,25 @@ function Experience() {
 
   return (
     <section className="bg-bg-tertiary relative flex min-h-screen w-full flex-col justify-start px-4 py-12 sm:px-8 md:py-20 lg:py-24 -z-10">
-      {/* Header Container */}
-      <div className="mx-auto w-full max-w-5xl pb-10 sm:pb-14">
+      {/* Header Container with Scroll Entrance */}
+      <motion.div
+        className="mx-auto w-full max-w-5xl pb-10 sm:pb-14"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
         <SectionHeader id="experience" title="Experience" subtitle="My Journey" inverted />
-      </div>
+      </motion.div>
 
-      {/* Dynamic Stack Container: Normal block flow on Mobile, Absolute Stack on Desktop */}
-      <div className="relative mx-auto flex w-full max-w-md items-center justify-center sm:max-w-xl md:max-w-4xl md:min-h-[500px] lg:max-w-5xl lg:min-h-[540px]">
+      {/* Dynamic Stack Container with Scroll Entrance */}
+      <motion.div
+        className="relative mx-auto flex w-full max-w-md items-center justify-center sm:max-w-xl md:max-w-4xl md:min-h-[500px] lg:max-w-5xl lg:min-h-[540px]"
+        initial={{ opacity: 0, y: 50, scale: 0.96 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+      >
         <Suspense fallback={<TicketSkeleton />}>
           {experiences.map((exp, index) => {
             const isCurrent = index === activeIndex;
@@ -47,7 +62,6 @@ function Experience() {
             const baseRotation = randomRotations[index];
             const translateY = offsetIndex * -10;
 
-            // Only show active card on mobile to prevent massive stack scrolling, OR render all stacked on desktop
             const isVisibleOnMobile = offsetIndex === 0;
 
             return (
@@ -76,7 +90,7 @@ function Experience() {
             );
           })}
         </Suspense>
-      </div>
+      </motion.div>
     </section>
   );
 }

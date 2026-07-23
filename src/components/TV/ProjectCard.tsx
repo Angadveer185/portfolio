@@ -7,78 +7,100 @@ interface Props {
 
 export default function ProjectCard({ project }: Props) {
   return (
-    <div className="grid h-full w-full grid-rows-[auto_auto] gap-4 overflow-y-auto rounded-3xl p-4 shadow-2xl backdrop-blur-sm sm:gap-5 md:p-6 lg:grid-rows-[1fr_auto] lg:gap-10 lg:overflow-hidden">
-      <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[1.2fr_.8fr] lg:gap-10">
-        <div className="flex h-full flex-col justify-start gap-4">
+    <div className="grid h-full w-full grid-rows-[1fr_auto] gap-4 overflow-hidden rounded-3xl p-4 shadow-2xl backdrop-blur-sm sm:gap-5 md:p-6 lg:gap-8">
+      {/* Scrollable upper content area */}
+      <div className="grid grid-cols-1 items-start gap-4 overflow-y-auto lg:grid-cols-[1.2fr_.8fr] lg:gap-10">
+        <div className="flex flex-col justify-start gap-4">
           <div>
-            <h2 className="font-bree text-text-primary text-2xl tracking-wide sm:text-3xl md:text-5xl">
+            <h2 className="font-bree text-text-primary text-2xl tracking-wide sm:text-3xl md:text-4xl">
               {project.title}
             </h2>
 
-            <p className="text-text-secondary mt-3 text-sm leading-6 sm:text-base sm:leading-7 md:text-lg md:leading-8">
+            <p className="text-text-secondary mt-3 text-sm leading-6 sm:text-base sm:leading-7">
               {project.description}
             </p>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <Tag key={tech} text={tech} />
-              ))}
+            <div className="mt-5">
+              <div className="grid grid-cols-4 gap-x-2 gap-y-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-4 xl:grid-cols-5">
+                {project.technologies.map((tech) => {
+                  const Icon = tech.icon;
+                  return (
+                    <div
+                      key={tech.name}
+                      className="group flex flex-col items-center justify-center gap-2"
+                    >
+                      <div className="flex aspect-square w-10 items-center justify-center rounded-xl border border-[#54463a]/30 bg-[#2A2A2A]/40 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-[#E25543]/60 group-hover:bg-[#3A2C24]/40 sm:w-12 lg:w-14">
+                        <Icon
+                          className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8"
+                          style={{ color: tech.color }}
+                        />
+                      </div>
+                      <span className="max-w-full text-center text-[10px] leading-tight text-[#D4BAA3] sm:text-[11px] lg:text-xs">
+                        {tech.name}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
 
+        {/* Image & Link Buttons */}
         <div className="flex w-full flex-col gap-4 self-start">
-            <div className="group relative aspect-video w-full overflow-hidden rounded-2xl border border-[#54463a] bg-black shadow-inner">
+          <div className="group relative aspect-video w-full overflow-hidden rounded-2xl border border-[#54463a] bg-black shadow-inner">
             <img
               src={project.image}
               alt={project.title}
               className="pointer-events-none h-full w-full object-cover transition-transform duration-400 ease-out select-none group-hover:scale-104"
             />
-            <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           </div>
 
-          <div className="relative z-30 flex w-full flex-col gap-3 sm:flex-row">
+          <div className="relative z-30 flex w-full flex-col gap-3 overflow-hidden p-1 sm:flex-row">
             <a
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-gochi group/btn inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-bg-tertiary px-4 py-3 text-base text-white shadow-lg shadow-[#E25543]/20 transition-all duration-150 hover:bg-[#ef6654] active:scale-95 active:bg-[#c94534] md:text-xl"
+              className="font-gochi group bg-bg-tertiary inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-base text-white shadow-lg shadow-[#E25543]/20 transition-all duration-200 hover:-translate-y-1 hover:scale-[1.02] hover:bg-[#ef6654] hover:shadow-xl hover:shadow-[#E25543]/35 active:translate-y-0 active:scale-[0.98]"
             >
-              <span>Live Demo</span>
-              <span className="text-sm transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">
+              <span>Live Site</span>
+
+              <span className="transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">
                 ↗
               </span>
             </a>
 
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-gochi group/btn inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border border-[#6b594b] bg-transparent px-4 py-3 text-base text-[#D4BAA3] transition-all duration-150 hover:bg-neutral-800/20 active:scale-95 active:bg-neutral-800/40 md:text-xl"
-            >
-              <span>GitHub</span>
-              <span className="text-sm opacity-60 transition-opacity group-hover/btn:opacity-100 md:text-base">
-                &lt;/&gt;
-              </span>
-            </a>
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-gochi group inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border border-[#6b594b] bg-transparent px-4 py-3 text-base text-[#D4BAA3] transition-all duration-200 hover:-translate-y-1 hover:scale-[1.02] hover:border-[#E25543]/60 hover:bg-[#2d2621] hover:text-white hover:shadow-lg hover:shadow-black/30 active:translate-y-0 active:scale-[0.98]"
+              >
+                <span>GitHub</span>
+
+                <span className="font-mono text-sm opacity-60 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100">
+                  &lt;/&gt;
+                </span>
+              </a>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="hidden lg:flex w-full flex-col gap-3 self-end border-t border-[#54463a]/30 pt-4 lg:pt-6">
-        <h4 className="font-bree text-xs tracking-widest text-[#E9D3BB]/70 uppercase">
+      {/* Fixed bottom row for achievements */}
+      <div className="hidden w-full flex-col gap-2 border-t border-[#54463a]/30 pt-3 lg:flex">
+        <h4 className="font-bree tracking-widest text-[#E9D3BB]/70 uppercase">
           Key Achievements
         </h4>
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
           {project.achievements?.map((achievement, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 rounded-xl border border-[#54463a]/10 bg-[#54463a]/5 p-3 transition-all duration-200 hover:translate-x-1 hover:bg-[#54463a]/15"
+              className="flex items-center gap-3 rounded-xl border border-[#54463a]/10 bg-[#54463a]/5 p-2"
             >
-              <span className="mt-0.5 shrink-0 bg-bg-tertiary w-2 h-2 rounded-full select-none shadow-[0_0_4px_rgba(226,85,67,0.6)]" />
-              <p className="text-xs leading-relaxed text-[#c8b8aa] md:text-sm">
-                {achievement}
-              </p>
+              <span className="bg-bg-tertiary mt-0.5 h-2 w-2 shrink-0 rounded-full" />
+              <p className="text-[#c8b8aa]">{achievement}</p>
             </div>
           ))}
         </div>

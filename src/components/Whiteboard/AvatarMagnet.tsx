@@ -163,6 +163,7 @@ transparent 55%
             }}
           >
             <Image
+              sizes="full"
               src={imagePath}
               alt="Avatar"
               fill

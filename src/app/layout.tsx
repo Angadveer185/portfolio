@@ -5,7 +5,8 @@ import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import ClickSpark from "@/components/ui/ClickSpark";
 import { COLORS } from "@/lib/colors";
-import { Toaster } from 'sonner';
+import { Toaster } from "sonner";
+import { LoadingProvider } from "@/context/LoadingContext"; // <--- Add this
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -28,15 +29,17 @@ export default function RootLayout({
         className={`flex min-h-full flex-col ${meddon.variable} ${gochi.variable} ${splash.variable} ${bree.variable}`}
       >
         <Toaster position="bottom-right" theme="dark" richColors />
-        <ClickSpark
-          sparkColor={COLORS.primary}
-          sparkSize={12}
-          sparkRadius={15}
-          sparkCount={8}
-          duration={400}
-        >
-          {children}
-        </ClickSpark>
+        <LoadingProvider>
+          <ClickSpark
+            sparkColor={COLORS.primary}
+            sparkSize={12}
+            sparkRadius={15}
+            sparkCount={8}
+            duration={400}
+          >
+            {children}
+          </ClickSpark>
+        </LoadingProvider>
       </body>
     </html>
   );

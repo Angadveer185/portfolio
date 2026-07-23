@@ -12,12 +12,12 @@ export default function TicketLeft({
       {/* Header Container Area */}
       <div className="flex flex-row md:flex-col items-center md:items-start gap-4 md:gap-0">
         {/* Logo Element Box */}
-        <div className="relative aspect-square w-16 sm:w-20 md:w-2/3 max-w-[120px] overflow-hidden rounded-md bg-bg-primary p-2 shrink-0 shadow-md">
+        <div className="relative aspect-square w-16 sm:w-20 md:w-2/3 max-w-[120px] overflow-hidden rounded-md bg-bg-primary shrink-0 shadow-md">
           <Image
             src={logo}
             alt={company}
             fill
-            className="object-contain p-2"
+            className="object-contain"
           />
         </div>
 
