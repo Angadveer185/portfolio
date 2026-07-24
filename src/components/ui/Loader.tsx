@@ -94,11 +94,21 @@ export default function Loader({ progress = 0, onComplete }: LoaderProps) {
     });
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile viewport
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   // Compute a smooth, non-decreasing visual progress
   useEffect(() => {
     const interval = setInterval(() => {
       setDisplayProgress((prev) => {
-        const isFullyLoaded = imagesLoaded && progress >= 100;
+        const isFullyLoaded = imagesLoaded && (isMobile || progress >= 100);
         
         if (isFullyLoaded) {
           if (prev < 100) {
@@ -107,9 +117,9 @@ export default function Loader({ progress = 0, onComplete }: LoaderProps) {
           return 100;
         }
         
-        // Model progress is 100 on initial mount until active loading starts
-        const adjustedModelProgress = (progress === 100 && prev < 5) ? 0 : progress;
-        const target = Math.round((imageProgress + adjustedModelProgress) / 2);
+        // Model progress is 100 on initial mount until active loading starts. On mobile, we bypass.
+        const adjustedModelProgress = isMobile ? 100 : ((progress === 100 && prev < 5) ? 0 : progress);
+        const target = isMobile ? imageProgress : Math.round((imageProgress + adjustedModelProgress) / 2);
         
         if (prev < target) {
           return Math.min(prev + 2, 99);
@@ -122,7 +132,7 @@ export default function Loader({ progress = 0, onComplete }: LoaderProps) {
     }, 45);
 
     return () => clearInterval(interval);
-  }, [imageProgress, progress, imagesLoaded]);
+  }, [imageProgress, progress, imagesLoaded, isMobile]);
 
   // Set ready status when displayProgress reaches 100%
   useEffect(() => {

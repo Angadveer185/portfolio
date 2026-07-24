@@ -29,7 +29,7 @@ function Experience() {
   };
 
   return (
-    <section className="bg-bg-tertiary relative flex min-h-screen w-full flex-col justify-start px-4 py-12 sm:px-8 md:py-20 lg:py-24 -z-10">
+    <section className="bg-bg-tertiary relative z-10 flex min-h-screen w-full flex-col justify-start px-4 py-12 sm:px-8 md:py-20 lg:py-24">
       
       <Doodle src="/doodles/Rabbit.png" width={120} x={7} y={40} rotation={28} className="hidden lg:block"/>
       <Doodle src="/doodles/Bird_2.png" width={120} x={95} y={80} rotation={-14} className="hidden lg:block"/>
@@ -47,7 +47,7 @@ function Experience() {
 
       {/* Dynamic Stack Container with Scroll Entrance */}
       <motion.div
-        className="relative mx-auto flex w-full max-w-md items-center justify-center sm:max-w-xl md:max-w-4xl md:min-h-[500px] lg:max-w-5xl lg:min-h-[540px]"
+        className="relative z-20 mx-auto flex w-full max-w-md items-center justify-center sm:max-w-xl md:max-w-4xl md:min-h-[500px] lg:max-w-5xl lg:min-h-[540px]"
         initial={{ opacity: 0, y: 50, scale: 0.96 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, margin: "-80px" }}

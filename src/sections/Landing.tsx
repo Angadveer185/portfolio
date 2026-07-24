@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import { Button } from "sketchbook-ui";
 import "sketchbook-ui/style.css";
@@ -42,6 +43,14 @@ const itemVariants: Variants = {
 
 export default function Landing() {
   const { isLoading } = useLoading();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
 
   return (
     <section className="relative flex min-h-screen w-full overflow-hidden" id="home">
@@ -145,7 +154,7 @@ export default function Landing() {
 
       {/* RIGHT (3D Component Untouched) */}
       <div className="hidden w-[50%] items-center justify-center overflow-clip lg:flex">
-        <Scene />
+        {isDesktop && <Scene />}
       </div>
     </section>
   );

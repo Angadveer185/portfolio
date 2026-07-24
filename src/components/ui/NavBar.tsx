@@ -93,11 +93,11 @@ export default function Navbar() {
             draggable={false}
             width={1600}
             height={220}
-            className="h-auto w-full select-none pointer-events-none min-h-[46px] object-cover sm:object-contain"
+            className="h-auto w-full select-none pointer-events-none min-h-[54px] xs:min-h-[60px] sm:min-h-0 object-cover sm:object-contain"
           />
 
           {/* Header Content Overlay */}
-          <div className="absolute inset-0 flex items-center justify-between px-2.5 xs:px-4 sm:px-6 md:px-10 lg:px-16 pb-0.5 sm:pb-1">
+          <div className="absolute inset-0 flex items-center justify-between px-4 xs:px-6 sm:px-6 md:px-10 lg:px-16 pb-0.5 sm:pb-1">
             {/* Logo */}
             <Link href="/" className="shrink-0 pr-1 sm:pr-0">
               <motion.div
@@ -113,18 +113,18 @@ export default function Navbar() {
                   alt="Logo"
                   width={54}
                   height={54}
-                  className="h-auto w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12"
+                  className="h-auto w-7 xs:w-8 sm:w-8 md:w-10 lg:w-12"
                 />
               </motion.div>
             </Link>
 
             {/* Scaled Inline Navigation (Zero scrollbars, smooth inline fit) */}
-            <nav className="flex min-w-0 items-center justify-end gap-1.5 xs:gap-2.5 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            <nav className="flex min-w-0 items-center justify-end gap-3 xs:gap-3.5 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               {navItems.map((item, idx) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="relative whitespace-nowrap py-1 px-0.5 text-[11px] xs:text-[12px] sm:text-sm md:text-lg lg:text-xl text-text-tertiary tracking-tight xs:tracking-normal sm:tracking-wide font-gochi transition-colors duration-200"
+                  className="relative whitespace-nowrap py-1 px-0.5 text-[13px] xs:text-[14px] sm:text-sm md:text-lg lg:text-xl text-text-tertiary tracking-tight xs:tracking-normal sm:tracking-wide font-gochi transition-colors duration-200"
                   onMouseEnter={() => setHoveredIndex(idx)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >

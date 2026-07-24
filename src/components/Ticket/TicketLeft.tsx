@@ -26,7 +26,7 @@ export default function TicketLeft({
           {company}
         </h2>
         {/* Role Identity */}
-        <h3 className="font-bree text-lg sm:text-xl mt-2 md:text-[clamp(1rem,1cqw,1rem)] text-white tracking-wide leading-tight">
+        <h3 className="font-bree text-lg sm:text-xl mt-2 md:text-[clamp(1rem,1cqw,1rem)] text-white tracking-wide leading-tight break-words">
           {role}
         </h3>
       </div>

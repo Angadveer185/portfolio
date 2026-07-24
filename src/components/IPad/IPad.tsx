@@ -47,7 +47,7 @@ function IPad() {
       </div>
 
       {/* CHASSIS CONTAINER (Multi-layered metallic bevels + depth shadow) */}
-      <div className="relative aspect-[10/16] md:aspect-[16/10] w-full rounded-[2.8rem] border-[10px] border-[#262626] bg-[#171717] p-3.5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),inset_0_1px_2px_rgba(255,255,255,0.2)] ring-1 ring-neutral-800">
+      <div className="relative aspect-[10/17] md:aspect-[16/10] w-full rounded-[2rem] md:rounded-[2.8rem] border-[6px] md:border-[10px] border-[#262626] bg-[#171717] p-2 md:p-3.5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),inset_0_1px_2px_rgba(255,255,255,0.2)] ring-1 ring-neutral-800">
         
         {/* Front-Facing Camera Dot */}
         <div className="absolute top-2 left-1/2 -translate-x-1/2 z-30 flex items-center justify-center">

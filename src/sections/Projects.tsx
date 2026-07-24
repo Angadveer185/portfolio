@@ -16,7 +16,7 @@ export default function Projects() {
 
       {/* Showcase Container with Staggered Scroll Entrance */}
       <motion.div
-        className="flex w-full items-center justify-center px-8 pb-20 lg:px-10 lg:pb-40"
+        className="flex w-full items-center justify-center px-2 xs:px-4 sm:px-8 pb-20 lg:px-10 lg:pb-40"
         initial={{ opacity: 0, y: 40, scale: 0.98 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, margin: "-80px" }}

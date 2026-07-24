@@ -152,6 +152,11 @@ function ClickSpark({
 
   useEffect(() => {
     const handlePointerDown = (event: PointerEvent) => {
+      // Disable sparks on mobile devices and touch gestures to avoid interfering with scrolling/swiping
+      if (event.pointerType === "touch" || window.innerWidth < 1024) {
+        return;
+      }
+
       const canvas = canvasRef.current;
       if (!canvas) {
         return;

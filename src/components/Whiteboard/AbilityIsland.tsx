@@ -43,7 +43,7 @@ export default function AbilityIsland({
         {/* Scaled down tape */}
         <div className="absolute -top-1.5 left-4 h-4 w-12 sm:-top-2 sm:left-5 sm:h-6 sm:w-16 rotate-[-8deg] rounded bg-[#ead9c7]" />
 
-        <h3 className="mt-1 text-lg sm:text-xl font-bold text-[#3E3124]">
+        <h3 className="mt-1 text-lg sm:text-xl font-bold text-[#3E3124] break-words">
           {title}
         </h3>
 
