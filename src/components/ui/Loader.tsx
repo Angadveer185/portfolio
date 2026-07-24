@@ -23,6 +23,8 @@ export default function Loader({ progress = 0, onComplete }: LoaderProps) {
   const [isReady, setIsReady] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
 
+  const [showSkip, setShowSkip] = useState(false);
+
   // Cycle quotes during loading
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,6 +39,14 @@ export default function Loader({ progress = 0, onComplete }: LoaderProps) {
       setIsReady(true);
     }
   }, [progress]);
+
+  // Show skip button after 4 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSkip(true);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Handle manual entrance on button click
   const handleEnter = () => {
@@ -203,6 +213,18 @@ export default function Loader({ progress = 0, onComplete }: LoaderProps) {
                     {Math.round(progress)}%
                   </span>
                 </div>
+
+                {showSkip && (
+                  <div className="flex justify-center mt-3">
+                    <button
+                      type="button"
+                      onClick={() => setIsReady(true)}
+                      className="font-gochi text-sm text-[#D4BAA3]/50 hover:text-[#D4BAA3]/90 underline transition-colors cursor-pointer"
+                    >
+                      Skip loading & enter
+                    </button>
+                  </div>
+                )}
               </motion.div>
             ) : (
               /* ENTER WORKSPACE BUTTON STATE */
