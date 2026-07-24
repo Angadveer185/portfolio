@@ -24,6 +24,31 @@ export default function Loader({ progress = 0, onComplete }: LoaderProps) {
   const [isFadingOut, setIsFadingOut] = useState(false);
 
   const [showSkip, setShowSkip] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [imageProgress, setImageProgress] = useState(0);
+  const [displayProgress, setDisplayProgress] = useState(0);
+
+  // List of critical image assets to preload
+  const CRITICAL_IMAGES = [
+    "/skills/Frontend.svg",
+    "/skills/Backend.svg",
+    "/skills/CoreCS.svg",
+    "/skills/Database.svg",
+    "/projects/MediaServer.png",
+    "/projects/Persephone.png",
+    "/projects/Epiphany.png",
+    "/projects/Portfolio.png",
+    "/projects/Trackio.png",
+    "/images/Avatar.png",
+    "/images/Paper.svg",
+    "/images/Logo.svg",
+    "/images/sheet-bg.svg",
+    "/doodles/Star.png",
+    "/doodles/Cat.png",
+    "/doodles/Red_Gift.png",
+    "/doodles/Godzilla.png",
+    "/doodles/Red_Cat.png",
+  ];
 
   // Cycle quotes during loading
   useEffect(() => {
@@ -33,12 +58,78 @@ export default function Loader({ progress = 0, onComplete }: LoaderProps) {
     return () => clearInterval(interval);
   }, []);
 
-  // Set ready status when progress reaches 100%
+  // Preload critical images
   useEffect(() => {
-    if (progress >= 100) {
+    let loadedCount = 0;
+    const totalImages = CRITICAL_IMAGES.length;
+    
+    if (totalImages === 0) {
+      setImagesLoaded(true);
+      setImageProgress(100);
+      return;
+    }
+
+    const onLoad = () => {
+      loadedCount++;
+      setImageProgress(Math.round((loadedCount / totalImages) * 100));
+      if (loadedCount === totalImages) {
+        setImagesLoaded(true);
+      }
+    };
+
+    const onError = () => {
+      // Treat errors as loaded so slow or missing assets don't block the site indefinitely
+      onLoad();
+    };
+
+    CRITICAL_IMAGES.forEach((src) => {
+      const img = new globalThis.Image();
+      img.src = src;
+      if (img.complete) {
+        onLoad();
+      } else {
+        img.addEventListener("load", onLoad);
+        img.addEventListener("error", onError);
+      }
+    });
+  }, []);
+
+  // Compute a smooth, non-decreasing visual progress
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDisplayProgress((prev) => {
+        const isFullyLoaded = imagesLoaded && progress >= 100;
+        
+        if (isFullyLoaded) {
+          if (prev < 100) {
+            return Math.min(prev + 5, 100);
+          }
+          return 100;
+        }
+        
+        // Model progress is 100 on initial mount until active loading starts
+        const adjustedModelProgress = (progress === 100 && prev < 5) ? 0 : progress;
+        const target = Math.round((imageProgress + adjustedModelProgress) / 2);
+        
+        if (prev < target) {
+          return Math.min(prev + 2, 99);
+        } else if (prev < 95) {
+          // Slow incremental crawl to feel active
+          return Number((prev + 0.2).toFixed(1));
+        }
+        return prev;
+      });
+    }, 45);
+
+    return () => clearInterval(interval);
+  }, [imageProgress, progress, imagesLoaded]);
+
+  // Set ready status when displayProgress reaches 100%
+  useEffect(() => {
+    if (displayProgress >= 100) {
       setIsReady(true);
     }
-  }, [progress]);
+  }, [displayProgress]);
 
   // Show skip button after 4 seconds
   useEffect(() => {
@@ -194,7 +285,7 @@ export default function Loader({ progress = 0, onComplete }: LoaderProps) {
                   <motion.div
                     className="relative h-full rounded-xl bg-bg-tertiary"
                     animate={{
-                      width: `${Math.min(100, Math.max(0, progress))}%`,
+                      width: `${Math.min(100, Math.max(0, displayProgress))}%`,
                     }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                     style={{
@@ -210,7 +301,7 @@ export default function Loader({ progress = 0, onComplete }: LoaderProps) {
                     Doodling 3D scenes...
                   </span>
                   <span className="text-base font-bold text-[#E25543]">
-                    {Math.round(progress)}%
+                    {Math.round(displayProgress)}%
                   </span>
                 </div>
 
