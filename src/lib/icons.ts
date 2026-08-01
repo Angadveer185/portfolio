@@ -17,6 +17,7 @@ import {
   SiNeo4J,
   SiCplusplus,
   SiOpenjdk,
+  SiThreedotjs,
 } from "react-icons/si";
 
 import {
@@ -36,6 +37,7 @@ export const Icons = {
   TypeScript: SiTypescript,
   JavaScript: SiJavascript,
   Tailwind: SiTailwindcss,
+  ThreeJs: SiThreedotjs,
 
   MongoDB: SiMongodb,
   MySQL: SiMysql,

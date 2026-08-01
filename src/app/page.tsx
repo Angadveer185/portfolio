@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/ui/NavBar";
+import MobileNavbar from "@/components/ui/MobileNavbar";
 import Landing from "@/sections/Landing";
 import dynamic from "next/dynamic";
 
@@ -14,9 +15,17 @@ const Footer = dynamic(() => import("@/sections/Footer"), { ssr: true });
 
 export default function Home() {
   return (
-    // relative + overflow-x-hidden stops horizontal scrollbars caused by floating doodles
     <main className="font-bree overflow-x-hidden w-full">
-      <Navbar />
+      {/* Show MobileNavbar below 768px, hide on desktop */}
+      <div className="block md:hidden">
+        <MobileNavbar />
+      </div>
+
+      {/* Hide Navbar on mobile, show on 768px and up */}
+      <div className="hidden md:block">
+        <Navbar />
+      </div>
+
       <div className="flex flex-col gap-20">
         <Landing />
         <About />

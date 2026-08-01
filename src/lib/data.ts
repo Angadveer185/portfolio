@@ -154,7 +154,6 @@ export const projects: Project[] = [
       Tech.Node,
       Tech.Express,
       Tech.NextJs,
-      Tech.TypeScript,
       Tech.Tailwind,
       Tech.MongoDB,
       Tech.Prisma,
@@ -203,9 +202,11 @@ export const projects: Project[] = [
     image: "/projects/Portfolio.png",
     technologies: [
       Tech.Node,
-      Tech.NextJs, 
+      Tech.NextJs,
+      Tech.React,
       Tech.TypeScript, 
-      Tech.Tailwind, 
+      Tech.Tailwind,
+      Tech.ThreeJs,
     ],
     github: "https://github.com/Angadveer185/portfolio",
     demo: "#",
@@ -220,7 +221,7 @@ export const projects: Project[] = [
     id: 5,
     title: "Trackio",
     description:
-      "A focused productivity tracker designed to help users manage their tasks and improve their workflow.",
+      "A focused productivity tracker designed to help users manage their everyday tasks and improve their workflow and learning.",
     image: "/projects/Trackio.png",
     technologies: [
       Tech.Node,

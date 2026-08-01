@@ -7,6 +7,7 @@ import ClickSpark from "@/components/ui/ClickSpark";
 import { COLORS } from "@/lib/colors";
 import { Toaster } from "sonner";
 import { LoadingProvider } from "@/context/LoadingContext";
+import AntiInspect from "@/components/ui/AntiInspect";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -40,6 +41,7 @@ export default function RootLayout({
             {children}
           </ClickSpark>
         </LoadingProvider>
+        <AntiInspect />
       </body>
     </html>
   );

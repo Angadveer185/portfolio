@@ -156,4 +156,9 @@ export const Tech = {
     icon: Icons.Algorithms,
     color: "#F43F5E",
   },
+  ThreeJs: {
+    name: "Three.js",
+    icon: Icons.ThreeJs,
+    color: "#FFFFFF",
+  },
 } as const;

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, Suspense, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { useEffect, Suspense, useState, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useProgress } from "@react-three/drei";
+import * as THREE from "three";
 import Ash from "@/components/Models/Ash";
 import { useLoading } from "@/context/LoadingContext";
 
@@ -17,8 +18,42 @@ function ProgressTracker() {
   return null;
 }
 
+// Wrapper component to handle Y-axis rotation on scroll
+function SpinningAsh(props: any) {
+  const groupRef = useRef<THREE.Group>(null);
+  const targetRotation = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Calculate scroll multiplier (adjust 0.005 to speed up/slow down rotation speed)
+      targetRotation.current = window.scrollY * 0.005;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useFrame(() => {
+    if (groupRef.current) {
+      // Lerp (smooth interpolation) towards the target scroll rotation
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(
+        groupRef.current.rotation.y,
+        targetRotation.current,
+        0.1 // Smooth factor
+      );
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      <Ash {...props} />
+    </group>
+  );
+}
+
 export default function Scene() {
   const [isGrabbing, setIsGrabbing] = useState(false);
+
   return (
     <div className={`relative w-full h-screen ${isGrabbing ? "cursor-grabbing" : "cursor-grab"}`}>
       <Canvas
@@ -33,7 +68,7 @@ export default function Scene() {
         <ProgressTracker />
 
         <Suspense fallback={null}>
-          <Ash scale={2.2} position={[0.4, -2.5, 0]} />
+          <SpinningAsh scale={2.2} position={[0.4, -2.5, 0]} />
         </Suspense>
 
         <OrbitControls
